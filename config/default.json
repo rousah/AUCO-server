@@ -1,0 +1,3 @@
+{
+  "mongoURI": "mongodb+srv://dbUser:2@@mRk9msjPKrwn@aucodb.qen3o.mongodb.net/AUCO?retryWrites=true&w=majority"
+}
