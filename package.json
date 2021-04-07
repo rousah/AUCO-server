@@ -2,10 +2,9 @@
   "name": "auco-server",
   "version": "1.0.0",
   "description": "auco server",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node app.js",
-    "app": "nodemon app.js",
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,8 +22,12 @@
     "body-parser": "^1.19.0",
     "config": "^3.3.6",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mongoose": "^5.11.19",
+    "joi": "^17.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.6.6",
+    "mongoose": "^5.12.3",
     "validation": "^0.0.1"
   },
   "devDependencies": {

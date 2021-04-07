@@ -1,4 +1,4 @@
-// app.js
+// server.js
 
 const express = require('express');
 const connectDB = require('./config/db');
@@ -16,6 +16,10 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(express.json({ extended: false }));
 
 app.get('/', (req, res) => res.send('Hello world!'));
+
+// Import routes
+const Router = require('./routes/routes');
+app.use(Router);
 
 const port = process.env.PORT || 8082;
 
