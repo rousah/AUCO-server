@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const User = require('../models/User');
-const {registerValidation, loginValidation} = require('../validation');
+const { registerValidation, loginValidation } = require('../validation');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -8,19 +8,19 @@ const jwt = require('jsonwebtoken');
 router.post('/register', async (req, res) => {
 
     console.log("/api/user/register")
-    
+
     // Data Validation
     const { error } = registerValidation(req.body);
-    
+
     // If there's an error it will not create a new user
-    if(error) {
+    if (error) {
         console.log(error.details[0].message)
         return res.status(400).send(error.details[0].message);
     }
 
     // Check if user is already registred
-    const emailExist = await User.findOne({email: req.body.email});
-    if(emailExist) {
+    const emailExist = await User.findOne({ email: req.body.email });
+    if (emailExist) {
         console.log("This email already exists!")
         return res.status(400).send("This email already exists!");
     }
@@ -31,9 +31,10 @@ router.post('/register', async (req, res) => {
 
     const user = new User({
         name: req.body.name,
-        email: req.body.email,
+        user: req.body.email,
         password: hashedPassword
     });
+
     try {
         const savedUser = await user.save();
         console.log("Successfully created user");
@@ -51,34 +52,34 @@ router.post('/login', async (req, res) => {
 
     // Data Validation
     const { error } = loginValidation(req.body);
-    
+
     // If there's an error it will not log in
-    if(error) {
+    if (error) {
         console.log(error.details[0].message);
         return res.status(400).send(error.details[0].message);
     }
 
     // Check if the email exists
-    const user = await User.findOne({email: req.body.email});
-    if(!user) {
+    const user = await User.findOne({ user: req.body.email });
+    if (!user) {
         console.log("Email is wrong");
-        return res.status(400).send("Email is wrong!");
+        return res.status(400).send("Email or password is wrong!");
     }
 
     // Check if password is correct
     const validPass = await bcrypt.compare(req.body.password, user.password);
-    if(!validPass) {
+    if (!validPass) {
         console.log("Password incorrect");
-        return res.status(400).send("Password isn't valid!");
+        return res.status(400).send("Email or password is wrong!");
     }
 
     // Create and assign a token
-    const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
+    const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
     res.header('auth-token', token).send(token);
 
     console.log("Successfully logged in");
 
-    res.status(200).send("Logged in!");
+    return res.status(200).send("Logged in!");
 
 });
 

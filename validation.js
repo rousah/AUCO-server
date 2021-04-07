@@ -13,7 +13,7 @@ const registerValidation = (data) => {
     // For testing
     const schema = Joi.object({
         name: Joi.string().min(1).required(),
-        email: Joi.string().min(1).max(255).required().email(),
+        email: Joi.string().min(1).max(255).required(),
         password: Joi.string().min(1).required()
     });
     console.log("Validating registration");
