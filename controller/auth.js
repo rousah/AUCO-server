@@ -48,7 +48,8 @@ router.post('/register', async (req, res) => {
 
 //Login
 router.post('/login', async (req, res) => {
-    console.log("/user/login")
+    console.log("/user/login");
+    console.log(req.body);
 
     // Data Validation
     const { error } = loginValidation(req.body);

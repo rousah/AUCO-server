@@ -33,7 +33,8 @@ const loginValidation = (data) => {
         email: Joi.string().min(1).max(255).required(),
         password: Joi.string().min(1).required()
     });
-    
+
+    console.log("Validating login");
     return schema.validate(data);
 };
 
