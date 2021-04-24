@@ -31,6 +31,8 @@ router.post('/register', async (req, res) => {
 
     const user = new User({
         name: req.body.name,
+        surname: req.body.surname,
+        institution: req.body.institution,
         user: req.body.email,
         password: hashedPassword
     });
@@ -38,7 +40,11 @@ router.post('/register', async (req, res) => {
     try {
         const savedUser = await user.save();
         console.log("Successfully created user");
-        res.send({ user: user._id });
+        // Create and assign a token in cookie
+        const token = jsonwebtoken.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+        res.cookie('token', token, { httpOnly: true });
+        res.json({ token });
+        res.status(200).send({ user: user._id });
     } catch (err) {
         console.log(err);
         res.status(400).send(err);
