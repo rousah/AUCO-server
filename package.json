@@ -25,11 +25,14 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "formidable": "^1.2.2",
+    "generate-password": "^1.6.0",
     "joi": "^17.4.0",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.6",
     "mongoose": "^5.12.3",
+    "random-username-generator": "^1.0.4",
     "read-excel-file": "^5.1.0",
+    "remove-accents": "^0.4.2",
     "validation": "^0.0.1"
   },
   "devDependencies": {
