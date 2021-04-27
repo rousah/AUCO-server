@@ -1,7 +1,6 @@
 // models/Class.js
 const mongoose = require('mongoose');
-
-const Student = new mongoose.Schema({ name: String, surname: String });
+const Student = require('./Student')
 
 const ClassSchema = new mongoose.Schema({
     name: {

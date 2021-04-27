@@ -1,10 +1,9 @@
 const router = require('express').Router();
-const User = require('../models/Class');
-const bcrypt = require('bcryptjs');
-const jsonwebtoken = require('jsonwebtoken');
 const { readXlsx } = require('../middleware/readXlsx');
 const formidable = require('formidable');
 const Class = require('../models/Class');
+const { createStudent } = require('../middleware/createStudent');
+const { create } = require('../models/Class');
 
 // Create class
 router.post('/create', async (req, res) => {
@@ -29,7 +28,14 @@ router.post('/create', async (req, res) => {
         else {
             students = await readXlsx(files['selectedFile']);
         }
-        let newClass = new Class({
+
+        // Create student user for every student
+        for (let i = 0; i < students.length; i++) {
+            students[i] = await createStudent(students[i]);
+            console.log(students[i]);
+        }
+
+        /*let newClass = new Class({
             name: fields['classname'],
             year: fields['year'],
             teacherid: fields['userId'],
@@ -44,7 +50,7 @@ router.post('/create', async (req, res) => {
         } catch (err) {
             console.log(err);
             res.status(400).send(err);
-        }
+        }*/
     });
 });
 
@@ -63,7 +69,7 @@ router.get('/classes/:id', async (req, res) => {
     }
     else {
         console.log("No classes found");
-        return res.status(400).send("No classes for this userid"); 
+        return res.status(400).send("No classes for this userid");
     }
 });
 
