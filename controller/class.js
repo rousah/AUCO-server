@@ -21,7 +21,6 @@ router.post('/create', async (req, res) => {
         let students = null;
         // For when we don't have a file
         if (fields['withFile'] == 'false') {
-            console.log(fields['students'])
             students = JSON.parse(fields['students']);
         }
         // For when we do have a file
@@ -32,7 +31,6 @@ router.post('/create', async (req, res) => {
         // Create student user for every student
         for (let i = 0; i < students.length; i++) {
             students[i] = await createStudent(students[i]);
-            console.log(students[i]);
         }
 
         // Create class

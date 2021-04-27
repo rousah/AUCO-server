@@ -28,7 +28,6 @@ const createRandomUser = async (name) => {
 
 const createStudent = async (student) => {
     console.log("createStudent()");
-    console.log(student);
 
     // Generate random username based on name
     var username = await createRandomUser(student.name)
