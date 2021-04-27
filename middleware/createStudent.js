@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 var rug = require('random-username-generator');
 var generator = require('generate-password');
+var accents = require('remove-accents');
 StudentModel = mongoose.model('student', Student);
 
 const findUsername = async (username) => {
@@ -11,7 +12,7 @@ const findUsername = async (username) => {
 
 const createRandomUser = async (name) => {
     // Set name for random username
-    rug.setNames([name]);
+    rug.setNames([accents.remove(name)]);
 
     // Generate random username based on name
     var username = rug.generate();

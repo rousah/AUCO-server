@@ -32,6 +32,7 @@
     "mongoose": "^5.12.3",
     "random-username-generator": "^1.0.4",
     "read-excel-file": "^5.1.0",
+    "remove-accents": "^0.4.2",
     "validation": "^0.0.1"
   },
   "devDependencies": {

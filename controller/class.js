@@ -35,7 +35,8 @@ router.post('/create', async (req, res) => {
             console.log(students[i]);
         }
 
-        /*let newClass = new Class({
+        // Create class
+        let newClass = new Class({
             name: fields['classname'],
             year: fields['year'],
             teacherid: fields['userId'],
@@ -50,7 +51,7 @@ router.post('/create', async (req, res) => {
         } catch (err) {
             console.log(err);
             res.status(400).send(err);
-        }*/
+        }
     });
 });
 
