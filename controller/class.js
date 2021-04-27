@@ -6,7 +6,7 @@ const { readXlsx } = require('../middleware/readXlsx');
 const formidable = require('formidable');
 const Class = require('../models/Class');
 
-//Register
+// Create class
 router.post('/create', async (req, res) => {
 
     console.log("/api/class/create");
@@ -35,7 +35,7 @@ router.post('/create', async (req, res) => {
             teacherid: fields['userId'],
             students: students
         });
-        
+
         // Save the class in the database
         try {
             const savedClass = await newClass.save();
@@ -47,5 +47,25 @@ router.post('/create', async (req, res) => {
         }
     });
 });
+
+// Get classes
+router.get('/classes/:id', async (req, res) => {
+    console.log("/api/class/classes");
+
+    // Getting id info of the user
+    userId = req.params.id;
+
+    // Getting classes
+    const aClass = await Class.find({ teacherid: userId });
+    if (aClass) {
+        console.log("Found classes for " + userId);
+        return res.status(200).send(aClass);
+    }
+    else {
+        console.log("No classes found");
+        return res.status(400).send("No classes for this userid"); 
+    }
+});
+
 
 module.exports = router;
