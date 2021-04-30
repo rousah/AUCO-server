@@ -1,8 +1,20 @@
 const router = require('express').Router();
 const User = require('../models/User');
+const Class = require('../models/Class');
+const mongoose = require('mongoose');
 const { registerValidation, loginValidation } = require('../validation');
 const bcrypt = require('bcryptjs');
 const jsonwebtoken = require('jsonwebtoken');
+
+const checkPassword = async (user, password) => {
+    // Check if password is correct
+    const validPass = await bcrypt.compare(password, user.password);
+    if (!validPass) {
+        console.log("Password incorrect");
+        return false;
+    }
+    return true;
+}
 
 //Register
 router.post('/register', async (req, res) => {
@@ -43,7 +55,7 @@ router.post('/register', async (req, res) => {
         // Create and assign a token in cookie
         const token = jsonwebtoken.sign({ _id: user._id }, process.env.TOKEN_SECRET);
         res.cookie('token', token, { httpOnly: true });
-        res.json({ token });
+        res.json({ token, user: user._id, role: 'teacher' });
         res.status(200).send({ user: user._id });
     } catch (err) {
         console.log(err);
@@ -66,24 +78,36 @@ router.post('/login', async (req, res) => {
         return res.status(400).send(error.details[0].message);
     }
 
-    // Check if the email exists
-    const user = await User.findOne({ user: req.body.email });
+    // Check if the email exists for teachers
+    let user = await User.findOne({ user: req.body.email });
     if (!user) {
-        console.log("Email is wrong");
-        return res.status(400).send("Email or password is wrong!");
+        // Check if user exists for students
+        user = await Class.find({
+            "students.username": req.body.email
+        },
+            {
+                "students.$": 1,
+                _id: 0
+            });
+        if (user.length == 0) {
+            console.log("No student or teacher with these credentials");
+            return res.status(400).send("Email, user or password is wrong!");
+        }
+        console.log("Found student");
+        user = user[0]['students'][0];
+        user.role = 'student';
     }
 
     // Check if password is correct
-    const validPass = await bcrypt.compare(req.body.password, user.password);
+    const validPass = await checkPassword(user, req.body.password);
     if (!validPass) {
-        console.log("Password incorrect");
         return res.status(400).send("Email or password is wrong!");
     }
 
     // Create and assign a token in cookie
     const token = jsonwebtoken.sign({ _id: user._id }, process.env.TOKEN_SECRET);
     res.cookie('token', token, { httpOnly: true });
-    res.json({ token, user: user._id });
+    res.json({ token, user: user._id, role: user.role });
     console.log("Successfully logged in");
     return res.send("Logged in!").status(200);
 
