@@ -55,7 +55,7 @@ router.post('/register', async (req, res) => {
         // Create and assign a token in cookie
         const token = jsonwebtoken.sign({ _id: user._id }, process.env.TOKEN_SECRET);
         res.cookie('token', token, { httpOnly: true });
-        res.json({ token });
+        res.json({ token, user: user._id, role: 'teacher' });
         res.status(200).send({ user: user._id });
     } catch (err) {
         console.log(err);
@@ -95,6 +95,7 @@ router.post('/login', async (req, res) => {
         }
         console.log("Found student");
         user = user[0]['students'][0];
+        user.role = 'student';
     }
 
     // Check if password is correct
@@ -106,7 +107,7 @@ router.post('/login', async (req, res) => {
     // Create and assign a token in cookie
     const token = jsonwebtoken.sign({ _id: user._id }, process.env.TOKEN_SECRET);
     res.cookie('token', token, { httpOnly: true });
-    res.json({ token, user: user._id });
+    res.json({ token, user: user._id, role: user.role });
     console.log("Successfully logged in");
     return res.send("Logged in!").status(200);
 
