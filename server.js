@@ -3,6 +3,7 @@
 const express = require('express');
 const connectDB = require('./config/db');
 var cors = require('cors');
+const bodyParser = require("body-parser")
 
 const app = express();
 
@@ -16,6 +17,8 @@ app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
 });
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Init Middleware
 app.use(express.json({ extended: false }));

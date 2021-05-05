@@ -8,4 +8,8 @@ router.use('/user', authRoute);
 const postRoute = require('../controller/post');
 router.use('/api/post', postRoute);
 
+//Classes
+const classRoute = require('../controller/class');
+router.use('/class', classRoute);
+
 module.exports = router;
