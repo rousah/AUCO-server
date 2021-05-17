@@ -21,7 +21,15 @@ const StudentSchema = new mongoose.Schema({
   openPassword: {
     type: String,
     required: false
-  }
+  },
+  score: {
+    type: Number,
+    required: false
+  },
+  level: {
+    type: Number,
+    required: false
+  } 
 });
 
 module.exports = StudentSchema;

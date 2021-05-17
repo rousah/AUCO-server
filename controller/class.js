@@ -72,5 +72,25 @@ router.get('/classes/:id', async (req, res) => {
     }
 });
 
+// Get class
+router.get('/:id', async (req, res) => {
+    console.log("/api/class");
+
+    // Getting id info of the class
+    classId = req.params.id;
+    console.log(classId)
+
+    // Getting class
+    const aClass = await Class.find({ _id: classId });
+    if (aClass) {
+        console.log("Found class for " + classId);
+        return res.status(200).send(aClass[0]);
+    }
+    else {
+        console.log("No classes found");
+        return res.status(400).send("No classes for this classid");
+    }
+});
+
 
 module.exports = router;

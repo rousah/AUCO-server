@@ -48,7 +48,9 @@ const createStudent = async (student) => {
         surname: student.surname,
         username: username,
         password: hashedPassword,
-        openPassword: password
+        openPassword: password,
+        score: 0,
+        level: 1
     }
 
     return student;
