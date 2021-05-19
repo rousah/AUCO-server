@@ -3,7 +3,6 @@ const { readXlsx } = require('../middleware/readXlsx');
 const formidable = require('formidable');
 const Class = require('../models/Class');
 const { createStudent } = require('../middleware/createStudent');
-const { create } = require('../models/Class');
 
 // Create class
 router.post('/create', async (req, res) => {
