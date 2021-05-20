@@ -107,7 +107,7 @@ router.post('/login', async (req, res) => {
     // Create and assign a token in cookie
     const token = jsonwebtoken.sign({ _id: user._id }, process.env.TOKEN_SECRET);
     res.cookie('token', token, { httpOnly: true });
-    res.json({ token, user: user._id, role: user.role });
+    res.json({ token, user: user._id, role: user.role, userDetails: user });
     console.log("Successfully logged in");
     return res.send("Logged in!").status(200);
 
