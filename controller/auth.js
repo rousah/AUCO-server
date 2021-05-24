@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const User = require('../models/User');
+const Teacher = require('../models/Teacher');
 const Class = require('../models/Class');
 const mongoose = require('mongoose');
 const { registerValidation, loginValidation } = require('../validation');
@@ -31,7 +31,7 @@ router.post('/register', async (req, res) => {
     }
 
     // Check if user is already registred
-    const emailExist = await User.findOne({ email: req.body.email });
+    const emailExist = await Teacher.findOne({ email: req.body.email });
     if (emailExist) {
         console.log("This email already exists!")
         return res.status(400).send("This email already exists!");
@@ -41,17 +41,17 @@ router.post('/register', async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-    const user = new User({
+    const user = new Teacher({
         name: req.body.name,
         surname: req.body.surname,
         institution: req.body.institution,
-        user: req.body.email,
+        email: req.body.email,
         password: hashedPassword
     });
 
     try {
         const savedUser = await user.save();
-        console.log("Successfully created user");
+        console.log("Successfully created teacher");
         // Create and assign a token in cookie
         const token = jsonwebtoken.sign({ _id: user._id }, process.env.TOKEN_SECRET);
         res.cookie('token', token, { httpOnly: true });
