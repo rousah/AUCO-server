@@ -1,4 +1,4 @@
-// models/Student.js
+// models/StudentSchema.js
 const mongoose = require('mongoose');
 
 const StudentSchema = new mongoose.Schema({

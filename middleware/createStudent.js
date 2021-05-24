@@ -1,4 +1,4 @@
-const Student = require('../models/Student');
+const Student = require('../models/StudentSchema');
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 var rug = require('random-username-generator');
