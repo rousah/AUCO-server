@@ -18,16 +18,13 @@ const ClassSchema = new mongoose.Schema({
         required: true
     },
     students: {
-        type: [GamificationInfo],
-        required: true
+        type: [GamificationInfo]
     },
     questionnaires: {
         type: [QuestionnaireSettings],
-        required: true
     },
     notifications: {
         type: [Notification],
-        required: true
     }
 });
 

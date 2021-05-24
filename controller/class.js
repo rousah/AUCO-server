@@ -3,6 +3,8 @@ const { readXlsx } = require('../middleware/readXlsx');
 const formidable = require('formidable');
 const Class = require('../models/Class');
 const { createStudent } = require('../middleware/createStudent');
+const { createGamificationInfo } = require('../middleware/createGamificationInfo');
+var ObjectID = require('mongodb').ObjectID;
 
 // Create class
 router.post('/create', async (req, res) => {
@@ -27,28 +29,46 @@ router.post('/create', async (req, res) => {
             students = await readXlsx(files['selectedFile']);
         }
 
-        // Create student user for every student
-        for (let i = 0; i < students.length; i++) {
-            students[i] = await createStudent(students[i]);
-        }
-
-        // Create class
+        // Create class without gamification info
         let newClass = new Class({
+            id_teacher: fields['userId'],
             name: fields['classname'],
-            year: fields['year'],
-            teacherid: fields['userId'],
-            students: students
+            year: fields['year']
         });
 
         // Save the class in the database
+        let savedClass;
         try {
-            const savedClass = await newClass.save();
-            console.log("Successfully created class");
-            res.status(200).send({ newClass: savedClass._id });
+            savedClass = await newClass.save();
+            console.log("Successfully saved class");
         } catch (err) {
             console.log(err);
             res.status(400).send(err);
         }
+
+        // Access the newly created class id
+        let classId = savedClass._id;
+
+        // Create student user for every student with class id
+        let gamification = [];
+        for (let i = 0; i < students.length; i++) {
+            students[i] = await createStudent(students[i], classId);
+
+            // Create gamificationinfo for all students
+            gamification[i] = createGamificationInfo(students[i]._id);
+        }
+
+        // Add gamificationinfo of all students to class in database
+        try {
+            savedClass = await Class.updateOne({ "_id": ObjectID(classId) }, { $set: { students: gamification } });
+            console.log("Successfully saved gamification info");
+        } catch (err) {
+            console.log(err);
+            res.status(400).send(err);
+        }
+
+        console.log("Successfully created class and students!");
+        res.status(200).send({ newClass: classId });
     });
 });
 

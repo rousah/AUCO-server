@@ -18,12 +18,10 @@ const GamificationInfoSchema = new mongoose.Schema({
         required: true
     },
     responses: {
-        type: [Response],
-        required: true
+        type: [Response]
     },
     badges: {
-        type: [Badge],
-        required: true
+        type: [Badge]
     }
 });
 
