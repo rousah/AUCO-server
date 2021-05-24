@@ -55,8 +55,8 @@ router.post('/register', async (req, res) => {
         // Create and assign a token in cookie
         const token = jsonwebtoken.sign({ _id: user._id }, process.env.TOKEN_SECRET);
         res.cookie('token', token, { httpOnly: true });
-        res.json({ token, user: user._id, role: 'teacher' });
-        res.status(200).send({ user: user._id });
+        res.json({ token, role: 'teacher', userDetails: user });
+        res.status(200).send();
     } catch (err) {
         console.log(err);
         res.status(400).send(err);
