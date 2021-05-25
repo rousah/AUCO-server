@@ -1,7 +1,6 @@
 // createGamificationInfo.js
 
 const createGamificationInfo = (studentId) => {
-    console.log("createGamificationInfo()");
 
     let gamificationInfo = {
         id_student: studentId,

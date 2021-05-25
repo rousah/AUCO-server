@@ -27,8 +27,6 @@ const createRandomUser = async (name) => {
 }
 
 const createStudent = async (student, classId) => {
-    console.log("createStudent()");
-
     // Generate random username based on name
     var username = await createRandomUser(student.name)
 
@@ -56,7 +54,6 @@ const createStudent = async (student, classId) => {
     let savedStudent;
     try {
         savedStudent = await newStudent.save();
-        console.log("Successfully saved student");
     } catch (err) {
         console.log(err);
         res.status(400).send(err);

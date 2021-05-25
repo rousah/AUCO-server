@@ -7,7 +7,8 @@ const Notification = require('./NotificationSchema');
 const ClassSchema = new mongoose.Schema({
     id_teacher: {
         type: String,
-        required: true
+        required: true,
+        index: true
     },
     name: {
         type: String,
