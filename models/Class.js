@@ -23,6 +23,7 @@ const ClassSchema = new mongoose.Schema({
     },
     questionnaires: {
         type: [QuestionnaireSettings],
+        required: true
     },
     notifications: {
         type: [Notification],

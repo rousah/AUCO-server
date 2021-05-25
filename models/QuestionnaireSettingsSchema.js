@@ -21,4 +21,4 @@ const QuestionnaireSettingsSchema = new mongoose.Schema({
     }
 });
 
-module.exports = QuestionnaireSettings = QuestionnaireSettingsSchema;
+module.exports = QuestionnaireSettingsSchema;

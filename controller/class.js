@@ -5,6 +5,8 @@ const Class = require('../models/Class');
 const { createStudent } = require('../middleware/createStudent');
 const { createGamificationInfo } = require('../middleware/createGamificationInfo');
 var ObjectID = require('mongodb').ObjectID;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 // Create class
 router.post('/create', async (req, res) => {
@@ -29,11 +31,39 @@ router.post('/create', async (req, res) => {
             students = await readXlsx(files['selectedFile']);
         }
 
+        // Create empty questionnaire schema and model
+        const QuestionnaireSchema = new Schema({}, { strict: false });
+        const Questionnaire = mongoose.model('Questionnaire', QuestionnaireSchema, 'questionnaires');
+
+        // Obtain questionnaires from database
+        let questionnaires;
+        try {
+            questionnaires = await Questionnaire.find();
+            console.log("Successfully obtained questionnaires");
+        } catch (err) {
+            console.log(err);
+            res.status(400).send(err);
+        }
+
+        let questionnaireSettings = [];
+        // Set default questionnaire settings
+        questionnaires.forEach(questionnaire => {
+            questionnaireSettings.push(
+                {
+                    id_questionnaire: questionnaire._id,
+                    active: true,
+                    automatic: true,
+                    options: "weekly"
+                }
+            );
+        });
+
         // Create class without gamification info
         let newClass = new Class({
             id_teacher: fields['userId'],
             name: fields['classname'],
-            year: fields['year']
+            year: fields['year'],
+            questionnaires: questionnaireSettings
         });
 
         // Save the class in the database
