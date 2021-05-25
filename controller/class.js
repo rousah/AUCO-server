@@ -110,7 +110,7 @@ router.get('/classes/:id', async (req, res) => {
     userId = req.params.id;
 
     // Getting classes
-    const aClass = await Class.find({ teacherid: userId });
+    const aClass = await Class.find({ id_teacher: userId });
     if (aClass) {
         console.log("Found classes for " + userId);
         return res.status(200).send(aClass);
@@ -123,7 +123,7 @@ router.get('/classes/:id', async (req, res) => {
 
 // Get class
 router.get('/:id', async (req, res) => {
-    console.log("/api/class");
+    console.log("/api/class/:id");
 
     // Getting id info of the class
     classId = req.params.id;
@@ -140,6 +140,5 @@ router.get('/:id', async (req, res) => {
         return res.status(400).send("No classes for this classid");
     }
 });
-
 
 module.exports = router;
