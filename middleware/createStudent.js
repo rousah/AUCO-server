@@ -16,6 +16,7 @@ const createRandomUser = async (name) => {
 
     // Generate random username based on name
     var username = rug.generate();
+    username = username.toLowerCase();
 
     // Check if username already exists
     const userExists = await findUsername(username);

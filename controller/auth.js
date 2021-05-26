@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const Teacher = require('../models/Teacher');
-const Class = require('../models/Class');
+const StudentSchema = require('../models/StudentSchema');
 const mongoose = require('mongoose');
+const Student = mongoose.model('student', StudentSchema);
 const { registerValidation, loginValidation } = require('../validation');
 const bcrypt = require('bcryptjs');
 const jsonwebtoken = require('jsonwebtoken');
@@ -82,19 +83,16 @@ router.post('/login', async (req, res) => {
     let user = await Teacher.findOne({ email: req.body.email });
     if (!user) {
         // Check if user exists for students
-        user = await Class.find({
-            "students.username": req.body.email
-        },
-            {
-                "students.$": 1,
-                _id: 0
-            });
+        user = await Student.find({
+            "username": req.body.email
+        });
         if (user.length == 0) {
             console.log("No student or teacher with these credentials");
             return res.status(400).send("Email, user or password is wrong!");
         }
         console.log("Found student");
-        user = user[0]['students'][0];
+        console.log(user)
+        user = user[0];
         user.role = 'student';
     }
 
