@@ -1,7 +1,12 @@
-// models/Student.js
+// models/StudentSchema.js
 const mongoose = require('mongoose');
 
 const StudentSchema = new mongoose.Schema({
+  id_class: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    index: true
+  },
   name: {
     type: String,
     required: true
@@ -21,15 +26,7 @@ const StudentSchema = new mongoose.Schema({
   openPassword: {
     type: String,
     required: false
-  },
-  score: {
-    type: Number,
-    required: false
-  },
-  level: {
-    type: Number,
-    required: false
-  } 
+  }
 });
 
 module.exports = StudentSchema;

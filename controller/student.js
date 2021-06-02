@@ -1,5 +1,8 @@
 const router = require('express').Router();
 const Class = require('../models/Class');
+const StudentSchema = require('../models/StudentSchema');
+const mongoose = require('mongoose');
+const Student = mongoose.model('student', StudentSchema);
 
 // Get student
 router.get('/:id', async (req, res) => {
@@ -24,6 +27,25 @@ router.get('/:id', async (req, res) => {
     else {
         console.log("No student found");
         return res.status(400).send("No student for this studentId");
+    }
+});
+
+// Get students from class
+router.get('/class/:id/', async (req, res) => {
+    console.log("/api/student/class/:id/");
+
+    // Getting id info of the class
+    classId = req.params.id;
+
+    // Getting students
+    const students = await Student.find({ id_class: classId });
+    if (students) {
+        console.log("Found students for " + classId);
+        return res.status(200).send(students);
+    }
+    else {
+        console.log("No students found");
+        return res.status(400).send("No students for this classid");
     }
 });
 

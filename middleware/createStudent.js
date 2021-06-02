@@ -1,4 +1,4 @@
-const Student = require('../models/Student');
+const Student = require('../models/StudentSchema');
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 var rug = require('random-username-generator');
@@ -12,10 +12,11 @@ const findUsername = async (username) => {
 
 const createRandomUser = async (name) => {
     // Set name for random username
-    rug.setNames([accents.remove(name)]);
+    rug.setNames([accents.remove(name.toLowerCase())]);
 
     // Generate random username based on name
     var username = rug.generate();
+    username = username.toLowerCase();
 
     // Check if username already exists
     const userExists = await findUsername(username);
@@ -26,9 +27,7 @@ const createRandomUser = async (name) => {
     else return username;
 }
 
-const createStudent = async (student) => {
-    console.log("createStudent()");
-
+const createStudent = async (student, classId) => {
     // Generate random username based on name
     var username = await createRandomUser(student.name)
 
@@ -43,17 +42,25 @@ const createStudent = async (student) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    student = {
+    let newStudent = new StudentModel({
+        id_class: classId,
         name: student.name,
         surname: student.surname,
         username: username,
         password: hashedPassword,
-        openPassword: password,
-        score: 0,
-        level: 1
+        openPassword: password
+    })
+
+    // Save the student in the database
+    let savedStudent;
+    try {
+        savedStudent = await newStudent.save();
+    } catch (err) {
+        console.log(err);
+        res.status(400).send(err);
     }
 
-    return student;
+    return savedStudent;
 }
 
 module.exports.createStudent = createStudent;
