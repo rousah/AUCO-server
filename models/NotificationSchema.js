@@ -2,6 +2,11 @@
 const mongoose = require('mongoose');
 
 const NotificationSchema = new mongoose.Schema({
+    id_student: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        index: true
+    },
     name: {
         type: String,
         required: true

@@ -141,4 +141,24 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+// Create report
+router.post('/:id/create-report', async (req, res) => {
+
+    console.log("/api/class/:id/create-report");
+
+    classid = req.params.id;
+    report = req.body;
+
+    // Add notification to class
+    try {
+        savedClass = await Class.updateOne({ "_id": ObjectID(classid) }, { $push: { notifications: report } });
+        console.log("Successfully created report");
+        return res.status(200).send("Successfully created report");
+    } catch (err) {
+        console.log(err);
+        res.status(400).send(err);
+    }
+});
+
+
 module.exports = router;
