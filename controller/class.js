@@ -7,6 +7,9 @@ const { createGamificationInfo } = require('../middleware/createGamificationInfo
 var ObjectID = require('mongodb').ObjectID;
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+// Create empty questionnaire schema and model
+const QuestionnaireSchema = new Schema({}, { strict: false });
+const Questionnaire = mongoose.model('Questionnaire', QuestionnaireSchema, 'questionnaires');
 
 // Create class
 router.post('/create', async (req, res) => {
@@ -51,10 +54,6 @@ router.post('/create', async (req, res) => {
         }
 
         console.log("Successfully read excel file");
-
-        // Create empty questionnaire schema and model
-        const QuestionnaireSchema = new Schema({}, { strict: false });
-        const Questionnaire = mongoose.model('Questionnaire', QuestionnaireSchema, 'questionnaires');
 
         // Obtain questionnaires from database
         let questionnaires;
