@@ -28,11 +28,18 @@ router.post('/create', async (req, res) => {
         }
         // For when we do have a file
         else if (fields['withFile'] == 'true') {
-            students = await readXlsx(files['selectedFile']);
+            try {
+                students = await readXlsx(files['selectedFile']);
+            }
+            // For corrupt, missing or broken file
+            catch (err) {
+                console.log("Something is wrong with the file")
+                return res.status(400).json({ message: "Xlxs file not correct" }).send();
+            }
         }
         else {
             console.log("Form information not correct")
-            return res.status(400).json({message: "Form information not correct"}).send();
+            return res.status(400).json({ message: "Form information not correct" }).send();
         }
 
         // Create empty questionnaire schema and model
