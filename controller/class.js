@@ -220,7 +220,7 @@ router.post('/:id/create-report', async (req, res) => {
             return res.status(200).send("Successfully created report");
         } catch (err) {
             console.log(err);
-            res.status(400).send(err);
+            return res.status(400).json({ message: "Error: " + err }).send();
         }
     }
     else {

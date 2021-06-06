@@ -223,7 +223,7 @@ describe("Test 2: Classes", function () {
                 //
                 done()
             }
-        ) // post
+        ) // get
     }) // it
 
     // ....................................................
@@ -250,7 +250,7 @@ describe("Test 2: Classes", function () {
                 //
                 done()
             }
-        ) // post
+        ) // get
     }) // it
 
     // ....................................................
@@ -277,7 +277,7 @@ describe("Test 2: Classes", function () {
                 //
                 done()
             }
-        ) // post
+        ) // get
     }) // it
 
 
@@ -306,7 +306,7 @@ describe("Test 2: Classes", function () {
                 //
                 done()
             }
-        ) // post
+        ) // get
     }) // it
 
     // ....................................................
@@ -326,6 +326,73 @@ describe("Test 2: Classes", function () {
                 console.log(" ----- response for POST /class/:id ---- ")
                 console.log(JSON.parse(body).message);
                 console.log(" ------------------------------------------- ")
+
+                //
+                //
+                //
+                done()
+            }
+        ) // get
+    }) // it
+
+    // ....................................................
+    // Create report with wrong body
+    // ....................................................
+    it("test POST /:id/create-report wrong body", function (done) {
+        request.post( // petition: POST
+            {
+                url: address + "/" + createdClassId + '/create-report',
+                json: true,
+                body: {
+                  /*  id_student: 'a',
+                    name: 'a',
+                    incident: 8,
+                    details: 'a'*/
+                }
+            },
+            // callback for when we get a response
+            function (err, response, body) {
+                assert.equal(err, null, "Error isn't null: " + err)
+                assert.equal(response.statusCode, 400,
+                    "Response code isn't 400: " + response.statusCode);
+
+                console.log(" ----- response for POST /class/:id/create-report wrong body ---- ")
+                console.log(body.message);
+                console.log(" --------------------------------------------------------------- ")
+
+                //
+                //
+                //
+                done()
+            }
+        ) // post
+    }) // it
+
+    // ....................................................
+    // Create report with wrong student id
+    // ....................................................
+    it("test POST /:id/create-report wrong student id", function (done) {
+        request.post( // petition: POST
+            {
+                url: address + "/" + createdClassId + '/create-report',
+                json: true,
+                body: {
+                    id_student: 'a',
+                    name: 'name',
+                    incident: true,
+                    details: 'details'
+                }
+            },
+            // callback for when we get a response
+            function (err, response, body) {
+                console.log(body);
+                assert.equal(err, null, "Error isn't null: " + err)
+                assert.equal(response.statusCode, 400,
+                    "Response code isn't 400: " + response.statusCode);
+
+                console.log(" ----- response for POST /class/:id/create-report wrong student id ---- ")
+                console.log(body.message);
+                console.log(" --------------------------------------------------------------- ")
 
                 //
                 //
