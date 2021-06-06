@@ -41,10 +41,11 @@ describe("Test 1: Authentication", function () {
 			function (err, response, body) {
 				assert.equal(err, null, "Error isn't null: " + err)
 				assert.equal(response.statusCode, 200,
-					"Response code isn't 200: " + response.statusCode)
+					"Response code isn't 200: " + response.statusCode);
+				expect(body.token).to.be.a('string');
 
 				console.log(" ----- response for POST /user/register ---- ")
-				console.log(body)
+				console.log(" Token: " + body.token);
 				console.log(" ------------------------------------------- ")
 
 				var user = body.userDetails
@@ -100,14 +101,13 @@ describe("Test 1: Authentication", function () {
 			{
 				url: address + "/login",
 				body: {
-					'email': 'unittestuser@test.com', // required, already exists
+					'email': 'unittestuser@test.com', // required, string
 					'password': 'testingserver123' // required, min 1
 				},
 				json: true
 			},
 			// callback for when we get a response
 			function (err, response, body) {
-				console.log(body)
 				assert.equal(err, null, "Error isn't null: " + err);
 				assert.equal(response.statusCode, 200,
 					"Response code isn't 200: " + response.statusCode);
@@ -115,6 +115,37 @@ describe("Test 1: Authentication", function () {
 
 				console.log(" ------- response for GET /user/login ------ ")
 				console.log(" Token: " + body.token);
+				console.log(" ----------------------------------------------- ")
+
+				//
+				//
+				//
+				done()
+			}
+		) // post
+	}) // it 
+
+	// ....................................................
+	// Log in with wrong data validation
+	// ....................................................
+	it("test POST /login with wrong data validation", function (done) {
+		request.post( // petition: POST
+			{
+				url: address + "/login",
+				body: {
+					'email': 9384849, // required, already exists
+					'password': 39384849 // required, min 1
+				},
+				json: true
+			},
+			// callback for when we get a response
+			function (err, response, body) {
+				assert.equal(err, null, "Error isn't null: " + err);
+				assert.equal(response.statusCode, 400,
+					"Response code isn't 400: " + response.statusCode);
+
+				console.log(" ------- response for GET /user/login ------ ")
+				console.log(" Message: " + body.message);
 				console.log(" ----------------------------------------------- ")
 
 				//
