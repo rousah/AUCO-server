@@ -35,7 +35,7 @@ router.post('/register', async (req, res) => {
     const emailExist = await Teacher.findOne({ email: req.body.email });
     if (emailExist) {
         console.log("This email already exists!");
-        return res.status(409).json({message: "This email already exists"}).send();
+        return res.status(409).json({ message: "This email already exists" }).send();
     }
 
     // Hash the password
@@ -108,6 +108,28 @@ router.post('/login', async (req, res) => {
     res.json({ token, role: user.role, userDetails: user });
     console.log("Successfully logged in");
     return res.send().status(200);
+
+});
+
+
+// Delete user
+router.delete('/delete/:email', async (req, res) => {
+    console.log("/user/delete");
+
+    // Check if the user exists for teachers
+    let user = await Teacher.findOne({ email: req.params.email });
+
+    // If it doesn't exist
+    if (!user) {
+
+        // TODO: Check also for student if username exists and delete that
+        return res.status(404).json({ message: "No teacher with this email" }).send();
+    }
+
+    // Delete user
+    await Teacher.deleteOne({ "email": req.params.email });
+    console.log("Successfully deleted user");
+    return res.status(200).json({ message: "Successfully deleted user" }).send();
 
 });
 
