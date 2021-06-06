@@ -252,5 +252,57 @@ describe("Test 2: Classes", function () {
         ) // post
     }) // it
 
+    // ....................................................
+    // Delete class from id
+    // ....................................................
+    it("test DELETE /:id", function (done) {
+        request.delete( // petition: DELETE
+            {
+                url: address + "/delete/" + createdClassId,
+            },
+            // callback for when we get a response
+            function (err, response, body) {
+                assert.equal(err, null, "Error isn't null: " + err)
+                assert.equal(response.statusCode, 200,
+                    "Response code isn't 200: " + response.statusCode);
+
+                console.log(" ----- response for DELETE /class/delete/:id ---- ")
+                console.log(JSON.parse(body).message);
+                console.log(" ------------------------------------------- ")
+
+                //
+                //
+                //
+                done()
+            }
+        ) // post
+    }) // it
+
+    // ....................................................
+    // Get classes with nonexistent id
+    // ....................................................
+ /*   it("test GET /:id nonexistent", function (done) {
+        request.get( // petition: GET
+            {
+                url: address + "/" + "60ad12443da81f08360c1651",
+            },
+            // callback for when we get a response
+            function (err, response, body) {
+                assert.equal(err, null, "Error isn't null: " + err)
+                assert.equal(response.statusCode, 404,
+                    "Response code isn't 404: " + response.statusCode);
+
+                console.log(" ----- response for POST /class/:id ---- ")
+                console.log(JSON.parse(body).message);
+                console.log(" ------------------------------------------- ")
+
+                //
+                //
+                //
+                done()
+            }
+        ) // post
+    }) // it*/
+
     
 }) // describe
