@@ -34,8 +34,8 @@ router.post('/register', async (req, res) => {
     // Check if user is already registred
     const emailExist = await Teacher.findOne({ email: req.body.email });
     if (emailExist) {
-        console.log("This email already exists!")
-        return res.status(400).send("This email already exists!");
+        console.log("This email already exists!");
+        return res.status(409).json({message: "This email already exists"}).send();
     }
 
     // Hash the password
@@ -54,9 +54,9 @@ router.post('/register', async (req, res) => {
         const savedUser = await user.save();
         console.log("Successfully created teacher");
         // Create and assign a token in cookie
-        const token = jsonwebtoken.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+        const token = jsonwebtoken.sign({ _id: savedUser._id }, process.env.TOKEN_SECRET);
         res.cookie('token', token, { httpOnly: true });
-        res.json({ token, role: 'teacher', userDetails: user });
+        res.json({ token, role: 'teacher', userDetails: savedUser });
         res.status(200).send();
     } catch (err) {
         console.log(err);

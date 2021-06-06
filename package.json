@@ -33,6 +33,7 @@
     "random-username-generator": "^1.0.4",
     "read-excel-file": "^5.1.0",
     "remove-accents": "^0.4.2",
+    "request": "^2.88.2",
     "validation": "^0.0.1"
   },
   "devDependencies": {
