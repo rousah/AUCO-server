@@ -226,6 +226,33 @@ describe("Test 2: Classes", function () {
         ) // post
     }) // it
 
+    // ....................................................
+    // Get classes with wrong teacher id
+    // ....................................................
+    it("test GET /classes/:id with wrong teacher id", function (done) {
+        request.get( // petition: GET
+            {
+                url: address + "/classes/" + "60ab7e75a2e3310990a6186e",
+            },
+            // callback for when we get a response
+            function (err, response, body) {
+                parsedBody = JSON.parse(body);
+                assert.equal(err, null, "Error isn't null: " + err)
+                assert.equal(response.statusCode, 400,
+                    "Response code isn't 400: " + response.statusCode);
+
+                console.log(" ----- response for POST /class/classes/:id ---- ")
+                console.log(" Message: " + parsedBody.message);
+                console.log(" ------------------------------------------- ")
+
+                //
+                //
+                //
+                done()
+            }
+        ) // post
+    }) // it
+
 
     // ....................................................
     // Get class with id

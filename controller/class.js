@@ -131,14 +131,20 @@ router.get('/classes/:id', async (req, res) => {
     userId = req.params.id;
 
     // Getting classes
-    const aClass = await Class.find({ id_teacher: userId });
-    if (aClass) {
-        console.log("Found classes for " + userId);
-        return res.status(200).send(aClass);
+    try {
+        const aClass = await Class.find({ id_teacher: userId });
+        if (aClass.length > 0) {
+            console.log("Found classes for " + userId);
+            return res.status(200).send(aClass);
+        }
+        else {
+            console.log("No classes found");
+            return res.status(400).json({message: "No classes for this userid"}).send();
+        }
     }
-    else {
-        console.log("No classes found");
-        return res.status(400).send("No classes for this userid");
+    catch (err) {
+        console.log(err);
+        return res.status(400).json({message: err}).send();
     }
 });
 
