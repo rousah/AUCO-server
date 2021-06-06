@@ -107,7 +107,7 @@ router.post('/login', async (req, res) => {
     res.cookie('token', token, { httpOnly: true });
     res.json({ token, role: user.role, userDetails: user });
     console.log("Successfully logged in");
-    return res.send().status(200);
+    return res.status(200).send();
 
 });
 

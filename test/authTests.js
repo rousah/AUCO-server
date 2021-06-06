@@ -7,6 +7,7 @@
 // --------------------------------------------------------
 // --------------------------------------------------------
 var assert = require('chai').assert;
+var expect = require('chai').expect;
 const request = require('request');
 
 // --------------------------------------------------------
@@ -81,6 +82,39 @@ describe("Test 1: Authentication", function () {
 
 				console.log(" ------- response for POST /user/register ------ ")
 				console.log(" Message: " + body.message);
+				console.log(" ----------------------------------------------- ")
+
+				//
+				//
+				//
+				done()
+			}
+		) // post
+	}) // it 
+
+	// ....................................................
+	// Log in with teacher
+	// ....................................................
+	it("test POST /login", function (done) {
+		request.post( // petition: POST
+			{
+				url: address + "/login",
+				body: {
+					'email': 'unittestuser@test.com', // required, already exists
+					'password': 'testingserver123' // required, min 1
+				},
+				json: true
+			},
+			// callback for when we get a response
+			function (err, response, body) {
+				console.log(body)
+				assert.equal(err, null, "Error isn't null: " + err);
+				assert.equal(response.statusCode, 200,
+					"Response code isn't 200: " + response.statusCode);
+				expect(body.token).to.be.a('string');
+
+				console.log(" ------- response for GET /user/login ------ ")
+				console.log(" Token: " + body.token);
 				console.log(" ----------------------------------------------- ")
 
 				//
