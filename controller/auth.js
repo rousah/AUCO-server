@@ -88,7 +88,7 @@ router.post('/login', async (req, res) => {
         });
         if (user.length == 0) {
             console.log("No student or teacher with these credentials");
-            return res.status(400).send("Email, user or password is wrong!");
+            return res.status(400).json({ message: "Email or password is wrong!" }).send();
         }
         console.log("Found student");
         console.log(user)
@@ -99,7 +99,7 @@ router.post('/login', async (req, res) => {
     // Check if password is correct
     const validPass = await checkPassword(user, req.body.password);
     if (!validPass) {
-        return res.status(400).send("Email or password is wrong!");
+        return res.status(400).json({ message: "Email or password is wrong!" }).send();
     }
 
     // Create and assign a token in cookie

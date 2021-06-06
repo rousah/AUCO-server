@@ -157,6 +157,68 @@ describe("Test 1: Authentication", function () {
 	}) // it 
 
 	// ....................................................
+	// Log in with wrong password
+	// ....................................................
+	it("test POST /login with wrong password", function (done) {
+		request.post( // petition: POST
+			{
+				url: address + "/login",
+				body: {
+					'email': 'unittestuser@test.com', // required, string
+					'password': 'wrongpass' // required, min 1
+				},
+				json: true
+			},
+			// callback for when we get a response
+			function (err, response, body) {
+				assert.equal(err, null, "Error isn't null: " + err);
+				assert.equal(response.statusCode, 400,
+					"Response code isn't 400: " + response.statusCode);
+
+				console.log(" ------- response for GET /user/login ------ ")
+				console.log(" Message: " + body.message);
+				console.log(" ----------------------------------------------- ")
+
+				//
+				//
+				//
+				done()
+			}
+		) // post
+	}) // it 
+
+	// ....................................................
+	// Log in with nonexisting user
+	// ....................................................
+	it("test POST /login with wrong password", function (done) {
+		request.post( // petition: POST
+			{
+				url: address + "/login",
+				body: {
+					'email': 'nonexisting', // required, string
+					'password': 'password' // required, min 1
+				},
+				json: true
+			},
+			// callback for when we get a response
+			function (err, response, body) {
+				assert.equal(err, null, "Error isn't null: " + err);
+				assert.equal(response.statusCode, 400,
+					"Response code isn't 400: " + response.statusCode);
+
+				console.log(" ------- response for GET /user/login ------ ")
+				console.log(" Message: " + body.message);
+				console.log(" ----------------------------------------------- ")
+
+				//
+				//
+				//
+				done()
+			}
+		) // post
+	}) // it 
+
+	// ....................................................
 	// Delete existing teacher
 	// ....................................................
 	it("test DELETE /delete", function (done) {
