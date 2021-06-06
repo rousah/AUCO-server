@@ -30,7 +30,13 @@ router.post('/create', async (req, res) => {
 
         // For when we don't have a file
         if (fields['withFile'] == 'false') {
-            students = JSON.parse(fields['students']);
+            if (fields['students'] == undefined) {
+                console.log("No students in form");
+                return res.status(400).json({ message: "Form information not complete, no students" }).send();
+            }
+            else {
+                students = JSON.parse(fields['students']);
+            }
         }
         // For when we do have a file
         else {

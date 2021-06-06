@@ -119,5 +119,78 @@ describe("Test 2: Classes", function () {
                 done()
             }
         ) // post
-    }).timeout(10000); // it, timeout because this call takes very long and if we don't do this we get timeout error after 2s
+    }).timeout(10000); // it, timeout because this call takes very long and if we don't do this we get timeout error after 2s 
+
+    // ....................................................
+    // Create class correctly without xlxs file and without students
+    // ....................................................
+    it("test POST /create without xlxs file and without students", function (done) {
+        request.post( // petition: POST
+            {
+                url: address + "/create",
+                form: true,
+                formData: {
+                    withFile: 'false',
+                    selectedFile: fs.createReadStream(path.join(__dirname, 'studentstest.xlsx')),
+                    userId: '60ab7e75a2e3310990a6186d',
+                    classname: 'clase test',
+                    year: '2º'
+                }
+            },
+            // callback for when we get a response
+            function (err, response, body) {
+                assert.equal(err, null, "Error isn't null: " + err)
+                assert.equal(response.statusCode, 400,
+                    "Response code isn't 400: " + response.statusCode);
+
+                console.log(" ----- response for POST /class/create ---- ")
+                console.log(" Message: " + JSON.parse(body).message);
+                console.log(" ------------------------------------------- ")
+
+                //
+                //
+                //
+                done()
+            }
+        ) // post
+    }) // it
+
+    // ....................................................
+    // Create class correctly without xlxs file but with students
+    // ....................................................
+    it("test POST /create without xlxs file but with students", function (done) {
+        const students = [
+            { name: "maria", surname: "valverde" },
+            { name: "juanjo", surname: "del valle" }
+        ]
+
+        request.post( // petition: POST
+            {
+                url: address + "/create",
+                form: true,
+                formData: {
+                    withFile: 'false',
+                    students: JSON.stringify(students),
+                    userId: '60ab7e75a2e3310990a6186d',
+                    classname: 'clase test',
+                    year: '2º'
+                }
+            },
+            // callback for when we get a response
+            function (err, response, body) {
+                assert.equal(err, null, "Error isn't null: " + err)
+                assert.equal(response.statusCode, 200,
+                    "Response code isn't 200: " + response.statusCode);
+
+                console.log(" ----- response for POST /class/create ---- ")
+                console.log(" New class id: " + JSON.parse(body).newClass);
+                console.log(" ------------------------------------------- ")
+
+                //
+                //
+                //
+                done()
+            }
+        ) // post
+    }) // it
 }) // describe
