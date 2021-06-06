@@ -9,6 +9,7 @@
 var assert = require('chai').assert;
 var expect = require('chai').expect;
 const request = require('request');
+let createdClassId;
 
 fs = require('fs');
 path = require('path');
@@ -90,7 +91,7 @@ describe("Test 2: Classes", function () {
     // ....................................................
     // Create class correctly with xlxs file
     // ....................................................
-    it("test POST /create with xlxs file", function (done) {
+ /*   it("test POST /create with xlxs file", function (done) {
         request.post( // petition: POST
             {
                 url: address + "/create",
@@ -120,7 +121,7 @@ describe("Test 2: Classes", function () {
             }
         ) // post
     }).timeout(10000); // it, timeout because this call takes very long and if we don't do this we get timeout error after 2s 
-
+*/
     // ....................................................
     // Create class correctly without xlxs file and without students
     // ....................................................
@@ -178,12 +179,43 @@ describe("Test 2: Classes", function () {
             },
             // callback for when we get a response
             function (err, response, body) {
+                let parsedBody = JSON.parse(body);
                 assert.equal(err, null, "Error isn't null: " + err)
                 assert.equal(response.statusCode, 200,
                     "Response code isn't 200: " + response.statusCode);
 
                 console.log(" ----- response for POST /class/create ---- ")
-                console.log(" New class id: " + JSON.parse(body).newClass);
+                console.log(" New class id: " + parsedBody.newClass);
+                console.log(" ------------------------------------------- ")
+
+                createdClassId = parsedBody.newClass;
+                //
+                //
+                //
+                done()
+            }
+        ) // post
+    }) // it
+
+
+    // ....................................................
+    // Get classes with id
+    // ....................................................
+    it("test GET /:id", function (done) {
+        request.get( // petition: GET
+            {
+                url: address + "/" + createdClassId,
+            },
+            // callback for when we get a response
+            function (err, response, body) {
+                parsedBody = JSON.parse(body);
+                assert.equal(err, null, "Error isn't null: " + err)
+                assert.equal(response.statusCode, 200,
+                    "Response code isn't 200: " + response.statusCode);
+                assert.equal(parsedBody._id, createdClassId, "Not correct id: " + parsedBody._id);
+
+                console.log(" ----- response for POST /class/:id ---- ")
+                console.log(" Class name: " + parsedBody.name);
                 console.log(" ------------------------------------------- ")
 
                 //
@@ -193,4 +225,6 @@ describe("Test 2: Classes", function () {
             }
         ) // post
     }) // it
+
+    
 }) // describe
