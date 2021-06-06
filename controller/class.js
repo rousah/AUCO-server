@@ -217,7 +217,7 @@ router.post('/:id/create-report', async (req, res) => {
         try {
             savedClass = await Class.updateOne({ "_id": ObjectID(classid) }, { $push: { notifications: report } });
             console.log("Successfully created report");
-            return res.status(200).send("Successfully created report");
+            return res.status(200).json({ message: "Successfully created report" }).send();
         } catch (err) {
             console.log(err);
             return res.status(400).json({ message: "Error: " + err }).send();
