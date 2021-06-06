@@ -5,6 +5,7 @@ const Class = require('../models/Class');
 const { createStudent } = require('../middleware/createStudent');
 const { deleteStudentsFromClass } = require('../middleware/deleteStudentsFromClass');
 const { createGamificationInfo } = require('../middleware/createGamificationInfo');
+const { reportValidation } = require('../validation');
 var ObjectID = require('mongodb').ObjectID;
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
@@ -139,12 +140,12 @@ router.get('/classes/:id', async (req, res) => {
         }
         else {
             console.log("No classes found");
-            return res.status(400).json({message: "No classes for this userid"}).send();
+            return res.status(400).json({ message: "No classes for this userid" }).send();
         }
     }
     catch (err) {
         console.log(err);
-        return res.status(400).json({message: err}).send();
+        return res.status(400).json({ message: err }).send();
     }
 });
 
@@ -210,14 +211,20 @@ router.post('/:id/create-report', async (req, res) => {
     classid = req.params.id;
     report = req.body;
 
-    // Add notification to class
-    try {
-        savedClass = await Class.updateOne({ "_id": ObjectID(classid) }, { $push: { notifications: report } });
-        console.log("Successfully created report");
-        return res.status(200).send("Successfully created report");
-    } catch (err) {
-        console.log(err);
-        res.status(400).send(err);
+    let validation = reportValidation(report);
+    if (!validation.error) {
+        // Add notification to class
+        try {
+            savedClass = await Class.updateOne({ "_id": ObjectID(classid) }, { $push: { notifications: report } });
+            console.log("Successfully created report");
+            return res.status(200).send("Successfully created report");
+        } catch (err) {
+            console.log(err);
+            res.status(400).send(err);
+        }
+    }
+    else {
+        return res.status(400).json({ message: validation.error.details[0].message }).send();
     }
 });
 
