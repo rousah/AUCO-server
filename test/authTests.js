@@ -1,6 +1,6 @@
 // --------------------------------------------------------
 // Emilia Rosa van der Heide
-// Unit tests for AUCO server
+// Unit tests for AUCO server for /user
 // authTests.js
 // --------------------------------------------------------
 

@@ -27,8 +27,12 @@ router.post('/create', async (req, res) => {
             students = JSON.parse(fields['students']);
         }
         // For when we do have a file
-        else {
+        else if (fields['withFile'] == 'true') {
             students = await readXlsx(files['selectedFile']);
+        }
+        else {
+            console.log("Form information not correct")
+            return res.status(400).json({message: "Form information not correct"}).send();
         }
 
         // Create empty questionnaire schema and model
