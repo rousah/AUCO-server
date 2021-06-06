@@ -3,6 +3,7 @@ const { readXlsx } = require('../middleware/readXlsx');
 const formidable = require('formidable');
 const Class = require('../models/Class');
 const { createStudent } = require('../middleware/createStudent');
+const { deleteStudentsFromClass } = require('../middleware/deleteStudentsFromClass');
 const { createGamificationInfo } = require('../middleware/createGamificationInfo');
 var ObjectID = require('mongodb').ObjectID;
 const mongoose = require('mongoose');
@@ -165,6 +166,34 @@ router.get('/:id', async (req, res) => {
         console.log("No class found");
         return res.status(404).json({ message: "No class for this classid" }).send();
     }
+});
+
+// Delete class
+router.delete('/delete/:id', async (req, res) => {
+    console.log("/api/class/delete/:id");
+
+    // Getting id info of the class
+    classId = req.params.id;
+
+    // Delete students
+    try {
+        deleteStudentsFromClass(classId);
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(404).json({ message: err }).send();
+    }
+
+    // Delete class
+    try {
+        await Class.deleteOne({ _id: classId });
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(404).json({ message: err }).send();
+    }
+
+    return res.status(200).json({ message: "Class deleted successfully" }).send();
 });
 
 // Create report
