@@ -214,17 +214,45 @@ router.post('/:id/create-report', async (req, res) => {
     let validation = reportValidation(report);
     if (!validation.error) {
         // Add notification to class
-        try {
-            savedClass = await Class.updateOne({ "_id": ObjectID(classid) }, { $push: { notifications: report } });
+        Class.findOneAndUpdate({ "_id": ObjectID(classid) }, { $push: { notifications: report } }, { returnNewDocument: true, useFindAndModify: false, new: true, projection: { "notifications": 1 } }, (err, result) => {
+            if (err) {
+                console.error(`Failed to add report: ${err}`);
+                return res.status(400).json({ message: "Error: " + err }).send();
+            }
             console.log("Successfully created report");
-            return res.status(200).json({ message: "Successfully created report" }).send();
-        } catch (err) {
-            console.log(err);
-            return res.status(400).json({ message: "Error: " + err }).send();
-        }
+            return res.status(200).json({ reportId: result.notifications[result.notifications.length - 1]._id }).send();
+        });
     }
     else {
         return res.status(400).json({ message: validation.error.details[0].message }).send();
+    }
+});
+
+// Delete report
+router.delete('/delete-report/:id', async (req, res) => {
+
+    console.log("/api/class/delete-report/:id");
+
+    reportid = req.params.id;
+
+    // Query for student
+    const query = {"notifications._id": reportid};
+
+    // Delete report
+    try {
+        Class.findOneAndUpdate(query, { $pull: { notifications: { '_id': reportid } } }, { useFindAndModify: false, new: true }, (err, result) => {
+            if (err) {
+                console.error(`Failed to delete report: ${err}`);
+                return res.status(400).json({ message: "Error: " + err }).send();
+            }
+            console.log("Successfully deleted report");
+            return res.status(200).json({ message: "Report deleted successfully" }).send();
+            //return res.status(200).json({ reportId: result.notifications[result.notifications.length - 1]._id }).send();
+        });
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(404).json({ message: err }).send();
     }
 });
 

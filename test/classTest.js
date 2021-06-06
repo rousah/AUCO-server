@@ -10,6 +10,8 @@ var assert = require('chai').assert;
 var expect = require('chai').expect;
 const request = require('request');
 let createdClassId;
+let createdReportId;
+
 
 fs = require('fs');
 path = require('path');
@@ -343,12 +345,7 @@ describe("Test 2: Classes", function () {
             {
                 url: address + "/" + createdClassId + '/create-report',
                 json: true,
-                body: {
-                  /*  id_student: 'a',
-                    name: 'a',
-                    incident: 8,
-                    details: 'a'*/
-                }
+                body: {}
             },
             // callback for when we get a response
             function (err, response, body) {
@@ -399,7 +396,7 @@ describe("Test 2: Classes", function () {
                 done()
             }
         ) // post
-    }) // it
+    }) // it 
 
     // ....................................................
     // Create report correctly
@@ -423,8 +420,9 @@ describe("Test 2: Classes", function () {
                     "Response code isn't 200: " + response.statusCode);
 
                 console.log(" ----- response for POST /class/:id/create-report ---- ")
-                console.log(body.message);
+                console.log("Report id created: " + body.reportId);
                 console.log(" ----------------------------------------------------- ")
+                createdReportId = body.reportId;
 
                 //
                 //
@@ -433,6 +431,32 @@ describe("Test 2: Classes", function () {
             }
         ) // post
     }) // it
+
+    // ....................................................
+    // Delete report created
+    // ....................................................
+    it("test DELETE /delete-report/:id", function (done) {
+        request.delete( // petition: DELETE
+            {
+                url: address + "/delete-report/" + createdReportId,
+            },
+            // callback for when we get a response
+            function (err, response, body) {
+                assert.equal(err, null, "Error isn't null: " + err)
+                assert.equal(response.statusCode, 200,
+                    "Response code isn't 200: " + response.statusCode);
+
+                console.log(" ----- response for DELETE /class/delete-report/:id ---- ")
+                console.log(JSON.parse(body).message);
+                console.log(" ------------------------------------------- ")
+
+                //
+                //
+                //
+                done()
+            }
+        ) // post
+    }) // it 
 
     // ....................................................
     // Delete class from id
@@ -459,32 +483,5 @@ describe("Test 2: Classes", function () {
             }
         ) // post
     }) // it
-
-    // ....................................................
-    // Get classes with nonexistent id
-    // ....................................................
-    /*   it("test GET /:id nonexistent", function (done) {
-           request.get( // petition: GET
-               {
-                   url: address + "/" + "60ad12443da81f08360c1651",
-               },
-               // callback for when we get a response
-               function (err, response, body) {
-                   assert.equal(err, null, "Error isn't null: " + err)
-                   assert.equal(response.statusCode, 404,
-                       "Response code isn't 404: " + response.statusCode);
-   
-                   console.log(" ----- response for POST /class/:id ---- ")
-                   console.log(JSON.parse(body).message);
-                   console.log(" ------------------------------------------- ")
-   
-                   //
-                   //
-                   //
-                   done()
-               }
-           ) // post
-       }) // it*/
-
 
 }) // describe
