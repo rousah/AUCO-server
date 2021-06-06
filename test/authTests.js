@@ -190,7 +190,7 @@ describe("Test 1: Authentication", function () {
 	// ....................................................
 	// Log in with nonexisting user
 	// ....................................................
-	it("test POST /login with wrong password", function (done) {
+	it("test POST /login with non existing user", function (done) {
 		request.post( // petition: POST
 			{
 				url: address + "/login",
@@ -208,6 +208,38 @@ describe("Test 1: Authentication", function () {
 
 				console.log(" ------- response for GET /user/login ------ ")
 				console.log(" Message: " + body.message);
+				console.log(" ----------------------------------------------- ")
+
+				//
+				//
+				//
+				done()
+			}
+		) // post
+	}) // it 
+
+	// ....................................................
+	// Log in with student
+	// ....................................................
+	it("test POST /login with student", function (done) {
+		request.post( // petition: POST
+			{
+				url: address + "/login",
+				body: {
+					'email': 'Ineffable-stefano-66', // required, string. Will have to change if I delete class
+					'password': 'AD8CZ7Np' // required, min 1
+				},
+				json: true
+			},
+			// callback for when we get a response
+			function (err, response, body) {
+				assert.equal(err, null, "Error isn't null: " + err);
+				assert.equal(response.statusCode, 200,
+					"Response code isn't 200: " + response.statusCode);
+				expect(body.token).to.be.a('string');
+
+				console.log(" ------- response for GET /user/login ------ ")
+				console.log(" Token: " + body.token);
 				console.log(" ----------------------------------------------- ")
 
 				//
