@@ -91,37 +91,37 @@ describe("Test 2: Classes", function () {
     // ....................................................
     // Create class correctly with xlxs file
     // ....................................................
- /*   it("test POST /create with xlxs file", function (done) {
-        request.post( // petition: POST
-            {
-                url: address + "/create",
-                form: true,
-                formData: {
-                    withFile: 'true',
-                    selectedFile: fs.createReadStream(path.join(__dirname, 'studentstest.xlsx')),
-                    userId: '60ab7e75a2e3310990a6186d',
-                    classname: 'clase test',
-                    year: '2º'
-                }
-            },
-            // callback for when we get a response
-            function (err, response, body) {
-                assert.equal(err, null, "Error isn't null: " + err)
-                assert.equal(response.statusCode, 200,
-                    "Response code isn't 200: " + response.statusCode);
-
-                console.log(" ----- response for POST /class/create ---- ")
-                console.log(" Class id: " + JSON.parse(body).newClass);
-                console.log(" ------------------------------------------- ")
-
-                //
-                //
-                //
-                done()
-            }
-        ) // post
-    }).timeout(10000); // it, timeout because this call takes very long and if we don't do this we get timeout error after 2s 
-*/
+    /*   it("test POST /create with xlxs file", function (done) {
+           request.post( // petition: POST
+               {
+                   url: address + "/create",
+                   form: true,
+                   formData: {
+                       withFile: 'true',
+                       selectedFile: fs.createReadStream(path.join(__dirname, 'studentstest.xlsx')),
+                       userId: '60ab7e75a2e3310990a6186d',
+                       classname: 'clase test',
+                       year: '2º'
+                   }
+               },
+               // callback for when we get a response
+               function (err, response, body) {
+                   assert.equal(err, null, "Error isn't null: " + err)
+                   assert.equal(response.statusCode, 200,
+                       "Response code isn't 200: " + response.statusCode);
+   
+                   console.log(" ----- response for POST /class/create ---- ")
+                   console.log(" Class id: " + JSON.parse(body).newClass);
+                   console.log(" ------------------------------------------- ")
+   
+                   //
+                   //
+                   //
+                   done()
+               }
+           ) // post
+       }).timeout(10000); // it, timeout because this call takes very long and if we don't do this we get timeout error after 2s 
+   */
     // ....................................................
     // Create class correctly without xlxs file and without students
     // ....................................................
@@ -197,9 +197,38 @@ describe("Test 2: Classes", function () {
         ) // post
     }) // it
 
+    // ....................................................
+    // Get classes with teacher id
+    // ....................................................
+    it("test GET /classes/:id with teacher id", function (done) {
+        request.get( // petition: GET
+            {
+                url: address + "/classes/" + "60ab7e75a2e3310990a6186d",
+            },
+            // callback for when we get a response
+            function (err, response, body) {
+                parsedBody = JSON.parse(body);
+                assert.equal(err, null, "Error isn't null: " + err)
+                assert.equal(response.statusCode, 200,
+                    "Response code isn't 200: " + response.statusCode);
+                assert.equal(parsedBody.length, 2,
+                    "Response lenght isn't 2: " + parsedBody.length);
+
+                console.log(" ----- response for POST /class/classes/:id ---- ")
+                console.log(" Classes: " + parsedBody.length);
+                console.log(" ------------------------------------------- ")
+
+                //
+                //
+                //
+                done()
+            }
+        ) // post
+    }) // it
+
 
     // ....................................................
-    // Get classes with id
+    // Get class with id
     // ....................................................
     it("test GET /:id", function (done) {
         request.get( // petition: GET
@@ -227,7 +256,7 @@ describe("Test 2: Classes", function () {
     }) // it
 
     // ....................................................
-    // Get classes with incorrect id
+    // Get class with incorrect id
     // ....................................................
     it("test GET /:id incorrect", function (done) {
         request.get( // petition: GET
@@ -281,28 +310,28 @@ describe("Test 2: Classes", function () {
     // ....................................................
     // Get classes with nonexistent id
     // ....................................................
- /*   it("test GET /:id nonexistent", function (done) {
-        request.get( // petition: GET
-            {
-                url: address + "/" + "60ad12443da81f08360c1651",
-            },
-            // callback for when we get a response
-            function (err, response, body) {
-                assert.equal(err, null, "Error isn't null: " + err)
-                assert.equal(response.statusCode, 404,
-                    "Response code isn't 404: " + response.statusCode);
+    /*   it("test GET /:id nonexistent", function (done) {
+           request.get( // petition: GET
+               {
+                   url: address + "/" + "60ad12443da81f08360c1651",
+               },
+               // callback for when we get a response
+               function (err, response, body) {
+                   assert.equal(err, null, "Error isn't null: " + err)
+                   assert.equal(response.statusCode, 404,
+                       "Response code isn't 404: " + response.statusCode);
+   
+                   console.log(" ----- response for POST /class/:id ---- ")
+                   console.log(JSON.parse(body).message);
+                   console.log(" ------------------------------------------- ")
+   
+                   //
+                   //
+                   //
+                   done()
+               }
+           ) // post
+       }) // it*/
 
-                console.log(" ----- response for POST /class/:id ---- ")
-                console.log(JSON.parse(body).message);
-                console.log(" ------------------------------------------- ")
 
-                //
-                //
-                //
-                done()
-            }
-        ) // post
-    }) // it*/
-
-    
 }) // describe
