@@ -226,5 +226,31 @@ describe("Test 2: Classes", function () {
         ) // post
     }) // it
 
+    // ....................................................
+    // Get classes with incorrect id
+    // ....................................................
+    it("test GET /:id incorrect", function (done) {
+        request.get( // petition: GET
+            {
+                url: address + "/" + "12345",
+            },
+            // callback for when we get a response
+            function (err, response, body) {
+                assert.equal(err, null, "Error isn't null: " + err)
+                assert.equal(response.statusCode, 404,
+                    "Response code isn't 404: " + response.statusCode);
+
+                console.log(" ----- response for POST /class/:id ---- ")
+                console.log(JSON.parse(body).message);
+                console.log(" ------------------------------------------- ")
+
+                //
+                //
+                //
+                done()
+            }
+        ) // post
+    }) // it
+
     
 }) // describe
