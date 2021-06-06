@@ -10,6 +10,9 @@ var assert = require('chai').assert;
 var expect = require('chai').expect;
 const request = require('request');
 
+fs = require('fs');
+path = require('path');
+
 // --------------------------------------------------------
 // --------------------------------------------------------
 const port = process.env.PORT || 8082;
@@ -21,62 +24,100 @@ const address = "http://localhost:" + port + '/class';
 
 describe("Test 2: Classes", function () {
 
-	// ....................................................
-	// Create class with incorrect form information
-	// ....................................................
-	it("test POST /create incorrect form information", function (done) {
-		request.post( // petition: POST
-			{
-				url: address + "/create",
+    // ....................................................
+    // Create class with incorrect form information
+    // ....................................................
+    it("test POST /create incorrect form information", function (done) {
+        request.post( // petition: POST
+            {
+                url: address + "/create",
                 form: true,
                 formData: { // empty to create error 
                 }
-			},
-			// callback for when we get a response
-			function (err, response, body) {
-				assert.equal(err, null, "Error isn't null: " + err)
-				assert.equal(response.statusCode, 400,
-					"Response code isn't 400: " + response.statusCode);
+            },
+            // callback for when we get a response
+            function (err, response, body) {
+                assert.equal(err, null, "Error isn't null: " + err)
+                assert.equal(response.statusCode, 400,
+                    "Response code isn't 400: " + response.statusCode);
 
-				console.log(" ----- response for POST /class/create ---- ")
-				console.log(" Message: " + JSON.parse(body).message);
-				console.log(" ------------------------------------------- ")
+                console.log(" ----- response for POST /class/create ---- ")
+                console.log(" Message: " + JSON.parse(body).message);
+                console.log(" ------------------------------------------- ")
 
-				//
-				//
-				//
-				done()
-			}
-		) // post
-	}) // it 
+                //
+                //
+                //
+                done()
+            }
+        ) // post
+    }) // it 
 
     // ....................................................
-	// Create class with incorrect xlxs file
-	// ....................................................
-	it("test POST /create incorrect xlxs file", function (done) {
-		request.post( // petition: POST
-			{
-				url: address + "/create",
+    // Create class with incorrect xlxs file
+    // ....................................................
+    it("test POST /create incorrect xlxs file", function (done) {
+        request.post( // petition: POST
+            {
+                url: address + "/create",
                 form: true,
-                formData: { 
-                    withFile: 'true'
+                formData: {
+                    withFile: 'true',
+                    selectedFile: 'not a file',
+                    userId: '60ab7e75a2e3310990a6186d',
+                    classname: 'clase test',
+                    year: '2º'
                 }
-			},
-			// callback for when we get a response
-			function (err, response, body) {
-				assert.equal(err, null, "Error isn't null: " + err)
-				assert.equal(response.statusCode, 400,
-					"Response code isn't 400: " + response.statusCode);
+            },
+            // callback for when we get a response
+            function (err, response, body) {
+                assert.equal(err, null, "Error isn't null: " + err)
+                assert.equal(response.statusCode, 400,
+                    "Response code isn't 400: " + response.statusCode);
 
-				console.log(" ----- response for POST /class/create ---- ")
-				console.log(" Message: " + JSON.parse(body).message);
-				console.log(" ------------------------------------------- ")
+                console.log(" ----- response for POST /class/create ---- ")
+                console.log(" Message: " + JSON.parse(body).message);
+                console.log(" ------------------------------------------- ")
 
-				//
-				//
-				//
-				done()
-			}
-		) // post
-	}) // it 
+                //
+                //
+                //
+                done()
+            }
+        ) // post
+    }) // it 
+
+    // ....................................................
+    // Create class correctly with xlxs file
+    // ....................................................
+    it("test POST /create with xlxs file", function (done) {
+        request.post( // petition: POST
+            {
+                url: address + "/create",
+                form: true,
+                formData: {
+                    withFile: 'true',
+                    selectedFile: fs.createReadStream(path.join(__dirname, 'studentstest.xlsx')),
+                    userId: '60ab7e75a2e3310990a6186d',
+                    classname: 'clase test',
+                    year: '2º'
+                }
+            },
+            // callback for when we get a response
+            function (err, response, body) {
+                assert.equal(err, null, "Error isn't null: " + err)
+                assert.equal(response.statusCode, 200,
+                    "Response code isn't 200: " + response.statusCode);
+
+                console.log(" ----- response for POST /class/create ---- ")
+                console.log(" Class id: " + JSON.parse(body).newClass);
+                console.log(" ------------------------------------------- ")
+
+                //
+                //
+                //
+                done()
+            }
+        ) // post
+    }).timeout(10000); // it, timeout because this call takes very long and if we don't do this we get timeout error after 2s
 }) // describe

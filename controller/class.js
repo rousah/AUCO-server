@@ -22,12 +22,18 @@ router.post('/create', async (req, res) => {
             return;
         }
         let students = null;
+
+        // Check if all fields are complete
+        if (fields['userId'] == undefined || fields['withFile'] == undefined || fields['classname'] == undefined || fields['year'] == undefined) {
+            return res.status(400).json({ message: "Form information not complete" }).send();
+        }
+
         // For when we don't have a file
         if (fields['withFile'] == 'false') {
             students = JSON.parse(fields['students']);
         }
         // For when we do have a file
-        else if (fields['withFile'] == 'true') {
+        else {
             try {
                 students = await readXlsx(files['selectedFile']);
             }
@@ -37,10 +43,8 @@ router.post('/create', async (req, res) => {
                 return res.status(400).json({ message: "Xlxs file not correct" }).send();
             }
         }
-        else {
-            console.log("Form information not correct")
-            return res.status(400).json({ message: "Form information not correct" }).send();
-        }
+
+        console.log("Successfully read excel file");
 
         // Create empty questionnaire schema and model
         const QuestionnaireSchema = new Schema({}, { strict: false });

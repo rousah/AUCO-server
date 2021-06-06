@@ -15,9 +15,10 @@ const studentSchema = {
 };
 
 const readXlsx = (file) => {
-    console.log("Reading excel file");
+    console.log("Attempting to read excel file");
+    let rows;
     try {
-        const rows = readXlsxFile(file.path).then((rows) => {
+        rows = readXlsxFile(file.path).then((rows) => {
             // `data` is an array of rows, each row being an array of cells.
             // `schema` is a "to JSON" convertion schema
             const objects = convertToJson(rows, studentSchema)
