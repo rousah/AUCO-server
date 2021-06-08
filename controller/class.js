@@ -73,7 +73,8 @@ router.post('/create', async (req, res) => {
                     id_questionnaire: questionnaire._id,
                     active: true,
                     automatic: true,
-                    options: "weekly"
+                    options: "weekly",
+                    name: questionnaire.name
                 }
             );
         });
