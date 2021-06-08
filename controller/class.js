@@ -8,10 +8,8 @@ const { createGamificationInfo } = require('../middleware/createGamificationInfo
 const { reportValidation } = require('../validation');
 var ObjectID = require('mongodb').ObjectID;
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-// Create empty questionnaire schema and model
-const QuestionnaireSchema = new Schema({}, { strict: false });
-const Questionnaire = mongoose.model('Questionnaire', QuestionnaireSchema, 'questionnaires');
+const Questionnaire = require('../models/Questionnaire');
+
 
 // Create class
 router.post('/create', async (req, res) => {
