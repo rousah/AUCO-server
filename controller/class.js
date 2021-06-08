@@ -7,7 +7,6 @@ const { deleteStudentsFromClass } = require('../middleware/deleteStudentsFromCla
 const { createGamificationInfo } = require('../middleware/createGamificationInfo');
 const { reportValidation } = require('../validation');
 var ObjectID = require('mongodb').ObjectID;
-const mongoose = require('mongoose');
 const Questionnaire = require('../models/Questionnaire');
 
 
@@ -164,8 +163,9 @@ router.get('/:id', async (req, res) => {
         console.log(err);
         return res.status(404).json({ message: "Error: " + err }).send();
     }
-    if (aClass) {
+    if (aClass.length > 0) {
         console.log("Found class for " + classId);
+        console.log(aClass)
         return res.status(200).send(aClass[0]);
     }
     else {
