@@ -1,6 +1,5 @@
 const router = require('express').Router();
 // Create empty questionnaire schema and model
-const mongoose = require('mongoose');
 const Questionnaire = require('../models/Questionnaire');
 
 fs = require('fs');

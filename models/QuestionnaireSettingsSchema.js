@@ -7,6 +7,10 @@ const QuestionnaireSettingsSchema = new mongoose.Schema({
         required: true,
         index: true
     },
+    name: {
+        type: String,
+        required: true
+    },
     active: {
         type: Boolean,
         required: true

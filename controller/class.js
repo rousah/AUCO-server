@@ -67,13 +67,18 @@ router.post('/create', async (req, res) => {
         let questionnaireSettings = [];
         // Set default questionnaire settings
         questionnaires.forEach(questionnaire => {
+
+            // Stringify and parse to json again because for some reason it didn't work without formatting even tho it's type object???
+            let stringJSON = JSON.stringify(questionnaire)
+            let obj = JSON.parse(stringJSON);
+
             questionnaireSettings.push(
                 {
-                    id_questionnaire: questionnaire._id,
+                    id_questionnaire: obj._id,
                     active: true,
                     automatic: true,
                     options: "weekly",
-                    name: questionnaire.name
+                    name: obj.name
                 }
             );
         });
