@@ -1,0 +1,658 @@
+[
+  {
+    "name": "Bullying",
+    "partitionable": true,
+    "description": "A continuación, verás unas frases que se refieren a comportamientos que algunos chicos y chicas realizan en el colegio. Por favor, contesta con sinceridad y sin ningún miedo si algún compañero/a del colegio o instituto para molestarte de verdad, se ha comportado así contigo el curso anterior.",
+    "questions": [
+      {
+        "question": "Algún compañero/a ha contado mentiras sobre mí para que los demás no quieran venir conmigo",
+        "answers": ["Nunca", "Pocas veces", "Muchas veces", "Siempre"]
+      },
+      {
+        "question": "Algún compañero/a se ha metido conmigo",
+        "answers": ["Nunca", "Pocas veces", "Muchas veces", "Siempre"]
+      },
+      {
+        "question": "Algún compañero/a me ha gritado",
+        "answers": ["Nunca", "Pocas veces", "Muchas veces", "Siempre"]
+      },
+      {
+        "question": "Cuando algún compañero/a se ha enfadado conmigo me ha apartado de mi grupo de amigos para que no jugara o participara en alguna actividad",
+        "answers": ["Nunca", "Pocas veces", "Muchas veces", "Siempre"]
+      },
+      {
+        "question": "Algún compañero/a me ha insultado",
+        "answers": ["Nunca", "Pocas veces", "Muchas veces", "Siempre"]
+      },
+      {
+        "question": "Algún compañero/a me ha ignorado o tratado con indiferencia",
+        "answers": ["Nunca", "Pocas veces", "Muchas veces", "Siempre"]
+      },
+      {
+        "question": "Cuando algún compañero/a se ha enfadado conmigo me ha tratado con indiferencia o me ha dejado de lado",
+        "answers": ["Nunca", "Pocas veces", "Muchas veces", "Siempre"]
+      },
+      {
+        "question": "Algún compañero/a me ha amenazado",
+        "answers": ["Nunca", "Pocas veces", "Muchas veces", "Siempre"]
+      },
+      {
+        "question": "Algún compañero/a me ha tratado con indiferencia o me ha dejado de lado para conseguir lo que él/ella quería",
+        "answers": ["Nunca", "Pocas veces", "Muchas veces", "Siempre"]
+      },
+      {
+        "question": "Algún compañero/a se ha burlado de mí para fastidiarme de verdad",
+        "answers": ["Nunca", "Pocas veces", "Muchas veces", "Siempre"]
+      },
+      {
+        "question": "Algún compañero/a ha contado rumores sobre mí y me ha criticado a mis espaldas",
+        "answers": ["Nunca", "Pocas veces", "Muchas veces", "Siempre"]
+      },
+      {
+        "question": "Algún compañero/a me ha robado",
+        "answers": ["Nunca", "Pocas veces", "Muchas veces", "Siempre"]
+      },
+      {
+        "question": "Algún compañero/a me ha tratado con indiferencia o me ha dejado delado a propósito para que me sienta mal",
+        "answers": ["Nunca", "Pocas veces", "Muchas veces", "Siempre"]
+      },
+      {
+        "question": "Algún compañero me ha dado una paliza",
+        "answers": ["Nunca", "Pocas veces", "Muchas veces", "Siempre"]
+      },
+      {
+        "question": "Algún compañero/a se ha metido con mi familia",
+        "answers": ["Nunca", "Pocas veces", "Muchas veces", "Siempre"]
+      },
+      {
+        "question": "Algún compañero/a ha compartido mis secretos con otros",
+        "answers": ["Nunca", "Pocas veces", "Muchas veces", "Siempre"]
+      },
+      {
+        "question": "Algún compañero/a me ha acusado de algo que yo no he hecho",
+        "answers": ["Nunca", "Pocas veces", "Muchas veces", "Siempre"]
+      },
+      {
+        "question": "Algún compañero/a le ha dicho a los demás que no sean mis amigos/as",
+        "answers": ["Nunca", "Pocas veces", "Muchas veces", "Siempre"]
+      },
+      {
+        "question": "Algún compañero/a me ha despreciado o humillado",
+        "answers": ["Nunca", "Pocas veces", "Muchas veces", "Siempre"]
+      },
+      {
+        "question": "Cuando has respondido a las preguntas anteriores, ¿en quién estabas pensando?",
+        "type": "choice",
+        "answers": [
+          "En un compañero especialmente",
+          "En una compañera especialmente",
+          "En un compañero especialmente, acompañado de un grupo de amigos/as que le apoyan",
+          "En una compañera especialmente, acompañado de un grupo de amigos/as que le apoyan",
+          "En varios compañeros/as que son un grupo de amigos",
+          "En varios compañeros/as que no con amigos entre sí"
+        ]
+      },
+      {
+        "question": "Estas situaciones que te han ocurrido en el colegio. ¿con qué frecuencia te han pasado?",
+        "type": "choice",
+        "answers": [
+          "Nunca me han pasado esas cosas",
+          "Solo me han pasado 1o 2 veces en el curso",
+          "Me han pasado 1 o 2 veces durante varios meses",
+          "Me han pasado 1 o 2 veces a la semana durante varios meses",
+          "Me han pasado todos o casi todos los días del curso"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Cyberbullying",
+    "partitionable": true,
+    "description": "Verás algunas frases sobre algunas conductas que algunos chicos y chicas han podido hacerte durante el último año, para intimidarte o fastidiarte de verdad (no lo han hecho como broma), con el teléfono móvil, en Internet, redes sociales, tablets, WhatsApp...",
+    "questions": [
+      {
+        "question": "Me han insultado o puesto en ridículo en redes sociales o en grupos como el WhatsApp para hacerme daño de verdad",
+        "answers": [
+          "Nunca",
+          "Pocas veces (entre 1 y 2 veces)",
+          "Algunas veces (entre 3 y 5 veces)",
+          "Bastantes veces (entre 6 y 10 veces)",
+          "Muchas veces (más de 10 veces)"
+        ]
+      },
+      {
+        "question": "Me han llamado al móvil y no han contestado para fastidiarme o asustarme",
+        "answers": [
+          "Nunca",
+          "Pocas veces (entre 1 y 2 veces)",
+          "Algunas veces (entre 3 y 5 veces)",
+          "Bastantes veces (entre 6 y 10 veces)",
+          "Muchas veces (más de 10 veces)"
+        ]
+      },
+      {
+        "question": "Me han obligado con amenazas a hacer cosas que no quería en Internet o por el móvil (como grabarme en video, dar dinero, hacer cosas malas)",
+        "answers": [
+          "Nunca",
+          "Pocas veces (entre 1 y 2 veces)",
+          "Algunas veces (entre 3 y 5 veces)",
+          "Bastantes veces (entre 6 y 10 veces)",
+          "Muchas veces (más de 10 veces)"
+        ]
+      },
+      {
+        "question": "Cuando algún compañero/a se ha enfadado conmigo me ha apartado de mi grupo de amigos para que no jugara o participara en alguna actividad",
+        "answers": [
+          "Nunca",
+          "Pocas veces (entre 1 y 2 veces)",
+          "Algunas veces (entre 3 y 5 veces)",
+          "Bastantes veces (entre 6 y 10 veces)",
+          "Muchas veces (más de 10 veces)"
+        ]
+      },
+      {
+        "question": "Me han dicho de conectarme a una red o a un grupo, y luego me han ignorado y no me han hecho caso para hacerme sentir mal",
+        "answers": [
+          "Nunca",
+          "Pocas veces (entre 1 y 2 veces)",
+          "Algunas veces (entre 3 y 5 veces)",
+          "Bastantes veces (entre 6 y 10 veces)",
+          "Muchas veces (más de 10 veces)"
+        ]
+      },
+      {
+        "question": "Han enviado o han subido a redes sociales videos o fotos para reirse de mí",
+        "answers": [
+          "Nunca",
+          "Pocas veces (entre 1 y 2 veces)",
+          "Algunas veces (entre 3 y 5 veces)",
+          "Bastantes veces (entre 6 y 10 veces)",
+          "Muchas veces (más de 10 veces)"
+        ]
+      },
+      {
+        "question": "Han contado secretos míos o revelado cosas personales mías sin mi permiso en redes sociales o en grupos (whatsapp, snapchat..)",
+        "answers": [
+          "Nunca",
+          "Pocas veces (entre 1 y 2 veces)",
+          "Algunas veces (entre 3 y 5 veces)",
+          "Bastantes veces (entre 6 y 10 veces)",
+          "Muchas veces (más de 10 veces)"
+        ]
+      },
+      {
+        "question": "Para burlarse de mí, han creado o manipulado videos o fotos mías, y las han subido o distribuido en redes sociales o por el móvil.",
+        "answers": [
+          "Nunca",
+          "Pocas veces (entre 1 y 2 veces)",
+          "Algunas veces (entre 3 y 5 veces)",
+          "Bastantes veces (entre 6 y 10 veces)",
+          "Muchas veces (más de 10 veces)"
+        ]
+      },
+      {
+        "question": "Me han amenazado con llamadas o mensajes de voz al móvil",
+        "answers": [
+          "Nunca",
+          "Pocas veces (entre 1 y 2 veces)",
+          "Algunas veces (entre 3 y 5 veces)",
+          "Bastantes veces (entre 6 y 10 veces)",
+          "Muchas veces (más de 10 veces)"
+        ]
+      },
+      {
+        "question": "Han entrado en mi perfil o en mis cuentas sin que yo pueda hacer nada",
+        "answers": [
+          "Nunca",
+          "Pocas veces (entre 1 y 2 veces)",
+          "Algunas veces (entre 3 y 5 veces)",
+          "Bastantes veces (entre 6 y 10 veces)",
+          "Muchas veces (más de 10 veces)"
+        ]
+      },
+      {
+        "question": "Han contado mentiras o rumores falsos sobre mí en redes sociales o en grupos de clase como el whatsapp",
+        "answers": [
+          "Nunca",
+          "Pocas veces (entre 1 y 2 veces)",
+          "Algunas veces (entre 3 y 5 veces)",
+          "Bastantes veces (entre 6 y 10 veces)",
+          "Muchas veces (más de 10 veces)"
+        ]
+      },
+      {
+        "question": "Se han hecho pasar por mí para decir o hacer cosas malas en Internet",
+        "answers": [
+          "Nunca",
+          "Pocas veces (entre 1 y 2 veces)",
+          "Algunas veces (entre 3 y 5 veces)",
+          "Bastantes veces (entre 6 y 10 veces)",
+          "Muchas veces (más de 10 veces)"
+        ]
+      },
+      {
+        "question": "Han creado adrede una página, un foro o un grupo solo para meterse conmigo y criticarme delante de todos",
+        "answers": [
+          "Nunca",
+          "Pocas veces (entre 1 y 2 veces)",
+          "Algunas veces (entre 3 y 5 veces)",
+          "Bastantes veces (entre 6 y 10 veces)",
+          "Muchas veces (más de 10 veces)"
+        ]
+      },
+      {
+        "question": "Han puesto mi número de teléfono móvil en Internet diciendo cosas malas o falsas de mí para que me llamen y meterme en líos",
+        "answers": [
+          "Nunca",
+          "Pocas veces (entre 1 y 2 veces)",
+          "Algunas veces (entre 3 y 5 veces)",
+          "Bastantes veces (entre 6 y 10 veces)",
+          "Muchas veces (más de 10 veces)"
+        ]
+      },
+      {
+        "question": "Me han grabado o me han hecho fotos humillantes sin mi permiso que han distribuido en redes sociales (como WhatsApp, Youtube, etc)",
+        "answers": [
+          "Nunca",
+          "Pocas veces (entre 1 y 2 veces)",
+          "Algunas veces (entre 3 y 5 veces)",
+          "Bastantes veces (entre 6 y 10 veces)",
+          "Muchas veces (más de 10 veces)"
+        ]
+      },
+      {
+        "question": "Me han cogido mi teléfono y desde mi móvil han enviado fotos, videos o mensajes malos a otros para meterme en problemas con los demás",
+        "answers": [
+          "Nunca",
+          "Pocas veces (entre 1 y 2 veces)",
+          "Algunas veces (entre 3 y 5 veces)",
+          "Bastantes veces (entre 6 y 10 veces)",
+          "Muchas veces (más de 10 veces)"
+        ]
+      },
+      {
+        "question": "Han criticado o se han burlado de comentarios, fotos o videos que yo he subido en redes sociales o en grupos como el WhatsApp",
+        "answers": [
+          "Nunca",
+          "Pocas veces (entre 1 y 2 veces)",
+          "Algunas veces (entre 3 y 5 veces)",
+          "Bastantes veces (entre 6 y 10 veces)",
+          "Muchas veces (más de 10 veces)"
+        ]
+      },
+      {
+        "question": "Han creado en Internet un perfil falso con mis datos personales para decir o hacer cosas malas, haciéndose pasar por mí",
+        "answers": [
+          "Nunca",
+          "Pocas veces (entre 1 y 2 veces)",
+          "Algunas veces (entre 3 y 5 veces)",
+          "Bastantes veces (entre 6 y 10 veces)",
+          "Muchas veces (más de 10 veces)"
+        ]
+      },
+      {
+        "question": "Me han ignorado y no han contestado a mensajes o cosas que yo he puesto en grupos o en redes sociales para hacerme sentir mal",
+        "answers": [
+          "Nunca",
+          "Pocas veces (entre 1 y 2 veces)",
+          "Algunas veces (entre 3 y 5 veces)",
+          "Bastantes veces (entre 6 y 10 veces)",
+          "Muchas veces (más de 10 veces)"
+        ]
+      },
+      {
+        "question": "Me han provocado en redes sociales o en grupos con insultos y burlas para que yo me enfade mucho y que haya una gran discusión",
+        "answers": [
+          "Nunca",
+          "Pocas veces (entre 1 y 2 veces)",
+          "Algunas veces (entre 3 y 5 veces)",
+          "Bastantes veces (entre 6 y 10 veces)",
+          "Muchas veces (más de 10 veces)"
+        ]
+      },
+      {
+        "question": "Me han eliminado o bloqueado de grupos para dejarme sin amigos",
+        "answers": [
+          "Nunca",
+          "Pocas veces (entre 1 y 2 veces)",
+          "Algunas veces (entre 3 y 5 veces)",
+          "Bastantes veces (entre 6 y 10 veces)",
+          "Muchas veces (más de 10 veces)"
+        ]
+      },
+      {
+        "question": "Me han llamado al móvil insultándome a mí o a mi familia",
+        "answers": [
+          "Nunca",
+          "Pocas veces (entre 1 y 2 veces)",
+          "Algunas veces (entre 3 y 5 veces)",
+          "Bastantes veces (entre 6 y 10 veces)",
+          "Muchas veces (más de 10 veces)"
+        ]
+      },
+      {
+        "question": "Me han robado fotos, videos, conversaciones privadas, y las han subido o enviado a otros ",
+        "answers": [
+          "Nunca",
+          "Pocas veces (entre 1 y 2 veces)",
+          "Algunas veces (entre 3 y 5 veces)",
+          "Bastantes veces (entre 6 y 10 veces)",
+          "Muchas veces (más de 10 veces)"
+        ]
+      },
+      {
+        "question": "Me han cambiado la contraseña de las redes sociales para que no pueda entrar en ellas",
+        "answers": [
+          "Nunca",
+          "Pocas veces (entre 1 y 2 veces)",
+          "Algunas veces (entre 3 y 5 veces)",
+          "Bastantes veces (entre 6 y 10 veces)",
+          "Muchas veces (más de 10 veces)"
+        ]
+      },
+      {
+        "question": "Me han enviado mensajes de burla para fastidiarme y molestarme",
+        "answers": [
+          "Nunca",
+          "Pocas veces (entre 1 y 2 veces)",
+          "Algunas veces (entre 3 y 5 veces)",
+          "Bastantes veces (entre 6 y 10 veces)",
+          "Muchas veces (más de 10 veces)"
+        ]
+      },
+      {
+        "question": "¿Quién crees que te ha molestado por el móvil o internet?",
+        "type": "multiple choice",
+        "description": "Selecciona clicando a uno o varios lo que piensas",
+        "answers": [
+          "Nadie",
+          "Compañeros del instituto, del colegio",
+          "Gente de fuera del instituto: del barrio, pueblo, equipo deportivo",
+          "Gente que he conocido por Internet",
+          "Ex amigos/as, o ex novios/as",
+          "Desconocidos"
+        ]
+      },
+      {
+        "question": "Estas situaciones que te han ocurrido en el colegio. ¿con qué frecuencia te han pasado?",
+        "type": "choice",
+        "answers": [
+          "Nunca me han pasado esas cosas",
+          "Solo me han pasado 1o 2 veces en el curso",
+          "Me han pasado 1 o 2 veces durante varios meses",
+          "Me han pasado 1 o 2 veces a la semana durante varios meses",
+          "Me han pasado todos o casi todos los días del curso"
+        ]
+      },
+      {
+        "question": "¿Más o menos, cuanto tiempo te han molestado o fastidiado por internet y por el móvil?",
+        "answers": [
+          "Nada",
+          "Menos de 1 mes",
+          "Entre 3 y 6 meses",
+          "Entre 6 meses y 1 año",
+          "Más de 1 año"
+        ]
+      },
+      {
+        "question": "¿Más o menos, con qué frecuencia te han molestado por el móvil o por Internet?",
+        "answers": [
+          "Nada",
+          "Solo 2 o 3 veces",
+          "1 o 2 veces al mes",
+          "1 o 2 veces a la semana",
+          "Todos o casi todos los días"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Sexismo",
+    "partitionable": true,
+    "description": "A continuación se presentan una serie de frases sobre los hombres y las mujeres y sobre su relación mutua en nuestra sociedad contemporánea. Por favor, indica el grado en que estás de acuerdo o en desacuerdo con cada una de las frases usando la escala.",
+    "questions": [
+      {
+        "question": "Aun cuando un hombre logre muchas cosas en su vida, nunca podrá sentirse verdaderamente completo a menos que tenga el amor de una mujer.",
+        "answers": [
+          "Totalmente en desacuerdo",
+          "Moderadamente en desacuerdo",
+          "Levemente en desacuerdo",
+          "Levemente de acuerdo",
+          "Moderadamente de acuerdo",
+          "Totalmente de acuerdo"
+        ]
+      },
+      {
+        "question": "Con el pretexto de pedir 'igualdad', muchas mujeres buscan privilegios especiales, tales como condiciones de trabajo que las favorezcan a ellas sobre los hombres.",
+        "answers": [
+          "Totalmente en desacuerdo",
+          "Moderadamente en desacuerdo",
+          "Levemente en desacuerdo",
+          "Levemente de acuerdo",
+          "Moderadamente de acuerdo",
+          "Totalmente de acuerdo"
+        ]
+      },
+      {
+        "question": "En caso de una catástrofe, las mujeres deben ser rescatadas antes que los hombres.",
+        "answers": [
+          "Totalmente en desacuerdo",
+          "Moderadamente en desacuerdo",
+          "Levemente en desacuerdo",
+          "Levemente de acuerdo",
+          "Moderadamente de acuerdo",
+          "Totalmente de acuerdo"
+        ]
+      },
+      {
+        "question": "La mayoría de las mujeres interpreta comentarios o conductas inocentes como sexistas, es decir, como expresiones de prejuicio o discriminación en contra de ellas.",
+        "answers": [
+          "Totalmente en desacuerdo",
+          "Moderadamente en desacuerdo",
+          "Levemente en desacuerdo",
+          "Levemente de acuerdo",
+          "Moderadamente de acuerdo",
+          "Totalmente de acuerdo"
+        ]
+      },
+      {
+        "question": "Las mujeres se ofenden muy fácilmente.",
+        "answers": [
+          "Totalmente en desacuerdo",
+          "Moderadamente en desacuerdo",
+          "Levemente en desacuerdo",
+          "Levemente de acuerdo",
+          "Moderadamente de acuerdo",
+          "Totalmente de acuerdo"
+        ]
+      },
+      {
+        "question": "Las personas no pueden ser verdaderamente felices en sus vidas a menos que tengan pareja del otro sexo.",
+        "answers": [
+          "Totalmente en desacuerdo",
+          "Moderadamente en desacuerdo",
+          "Levemente en desacuerdo",
+          "Levemente de acuerdo",
+          "Moderadamente de acuerdo",
+          "Totalmente de acuerdo"
+        ]
+      },
+      {
+        "question": "En el fondo, las mujeres feministas pretenden que la mujer tenga más poder que el hombre.",
+        "answers": [
+          "Totalmente en desacuerdo",
+          "Moderadamente en desacuerdo",
+          "Levemente en desacuerdo",
+          "Levemente de acuerdo",
+          "Moderadamente de acuerdo",
+          "Totalmente de acuerdo"
+        ]
+      },
+      {
+        "question": "Muchas mujeres se caracterizan por una pureza que pocos hombres poseen.",
+        "answers": [
+          "Totalmente en desacuerdo",
+          "Moderadamente en desacuerdo",
+          "Levemente en desacuerdo",
+          "Levemente de acuerdo",
+          "Moderadamente de acuerdo",
+          "Totalmente de acuerdo"
+        ]
+      },
+      {
+        "question": "Las mujeres deben ser queridas y protegidas por los hombres.",
+        "answers": [
+          "Totalmente en desacuerdo",
+          "Moderadamente en desacuerdo",
+          "Levemente en desacuerdo",
+          "Levemente de acuerdo",
+          "Moderadamente de acuerdo",
+          "Totalmente de acuerdo"
+        ]
+      },
+      {
+        "question": "La mayoría de las mujeres no aprecia completamente todo lo que los hombres hacen por ellas.",
+        "answers": [
+          "Totalmente en desacuerdo",
+          "Moderadamente en desacuerdo",
+          "Levemente en desacuerdo",
+          "Levemente de acuerdo",
+          "Moderadamente de acuerdo",
+          "Totalmente de acuerdo"
+        ]
+      },
+      {
+        "question": "Las mujeres intentan ganar poder controlando a los hombres.",
+        "answers": [
+          "Totalmente en desacuerdo",
+          "Moderadamente en desacuerdo",
+          "Levemente en desacuerdo",
+          "Levemente de acuerdo",
+          "Moderadamente de acuerdo",
+          "Totalmente de acuerdo"
+        ]
+      },
+      {
+        "question": "Todo hombre debe tener una mujer a quien amar.",
+        "answers": [
+          "Totalmente en desacuerdo",
+          "Moderadamente en desacuerdo",
+          "Levemente en desacuerdo",
+          "Levemente de acuerdo",
+          "Moderadamente de acuerdo",
+          "Totalmente de acuerdo"
+        ]
+      },
+      {
+        "question": "El hombre está incompleto sin la mujer.",
+        "answers": [
+          "Totalmente en desacuerdo",
+          "Moderadamente en desacuerdo",
+          "Levemente en desacuerdo",
+          "Levemente de acuerdo",
+          "Moderadamente de acuerdo",
+          "Totalmente de acuerdo"
+        ]
+      },
+      {
+        "question": "Las mujeres exageran los problemas que tienen en el trabajo.",
+        "answers": [
+          "Totalmente en desacuerdo",
+          "Moderadamente en desacuerdo",
+          "Levemente en desacuerdo",
+          "Levemente de acuerdo",
+          "Moderadamente de acuerdo",
+          "Totalmente de acuerdo"
+        ]
+      },
+      {
+        "question": "Una vez que una mujer logra que un hombre se comprometa con ella, por lo general intenta controlarlo estrechamente.",
+        "answers": [
+          "Totalmente en desacuerdo",
+          "Moderadamente en desacuerdo",
+          "Levemente en desacuerdo",
+          "Levemente de acuerdo",
+          "Moderadamente de acuerdo",
+          "Totalmente de acuerdo"
+        ]
+      },
+      {
+        "question": "Cuando las mujeres son vencidas por los hombres en una competencia justa, generalmente ellas se quejan de haber sido discriminadas.",
+        "answers": [
+          "Totalmente en desacuerdo",
+          "Moderadamente en desacuerdo",
+          "Levemente en desacuerdo",
+          "Levemente de acuerdo",
+          "Moderadamente de acuerdo",
+          "Totalmente de acuerdo"
+        ]
+      },
+      {
+        "question": "Una buena mujer debería ser puesta en un pedestal por su hombre.",
+        "answers": [
+          "Totalmente en desacuerdo",
+          "Moderadamente en desacuerdo",
+          "Levemente en desacuerdo",
+          "Levemente de acuerdo",
+          "Moderadamente de acuerdo",
+          "Totalmente de acuerdo"
+        ]
+      },
+      {
+        "question": "Existen muchas mujeres que, para burlarse de los hombres, primero se insinúan sexualmente a ellos y luego rechazan los avances de ésto.",
+        "answers": [
+          "Totalmente en desacuerdo",
+          "Moderadamente en desacuerdo",
+          "Levemente en desacuerdo",
+          "Levemente de acuerdo",
+          "Moderadamente de acuerdo",
+          "Totalmente de acuerdo"
+        ]
+      },
+      {
+        "question": "Las mujeres, en comparación con los hombres, tienden a tener una mayor sensibilidad moral.",
+        "answers": [
+          "Totalmente en desacuerdo",
+          "Moderadamente en desacuerdo",
+          "Levemente en desacuerdo",
+          "Levemente de acuerdo",
+          "Moderadamente de acuerdo",
+          "Totalmente de acuerdo"
+        ]
+      },
+      {
+        "question": "Los hombres deberían estar dispuestos a sacrificar su propio bienestar con el fin de proveer seguridad económica a las mujeres.",
+        "answers": [
+          "Totalmente en desacuerdo",
+          "Moderadamente en desacuerdo",
+          "Levemente en desacuerdo",
+          "Levemente de acuerdo",
+          "Moderadamente de acuerdo",
+          "Totalmente de acuerdo"
+        ]
+      },
+      {
+        "question": "Las mujeres feministas están haciendo demandas completamente irracionales a los hombres.",
+        "answers": [
+          "Totalmente en desacuerdo",
+          "Moderadamente en desacuerdo",
+          "Levemente en desacuerdo",
+          "Levemente de acuerdo",
+          "Moderadamente de acuerdo",
+          "Totalmente de acuerdo"
+        ]
+      },
+      {
+        "question": "Las mujeres, en comparación con los hombres, tienden a tener un sentido más refinado de la cultura y el buen gusto.",
+        "answers": [
+          "Totalmente en desacuerdo",
+          "Moderadamente en desacuerdo",
+          "Levemente en desacuerdo",
+          "Levemente de acuerdo",
+          "Moderadamente de acuerdo",
+          "Totalmente de acuerdo"
+        ]
+      }
+    ]
+  }
+]

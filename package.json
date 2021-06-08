@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -33,9 +33,12 @@
     "random-username-generator": "^1.0.4",
     "read-excel-file": "^5.1.0",
     "remove-accents": "^0.4.2",
+    "request": "^2.88.2",
     "validation": "^0.0.1"
   },
   "devDependencies": {
+    "chai": "^4.3.4",
+    "mocha": "^8.4.0",
     "nodemon": "^2.0.7"
   }
 }

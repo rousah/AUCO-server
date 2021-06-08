@@ -16,4 +16,8 @@ router.use('/class', classRoute);
 const studentRoute = require('../controller/student');
 router.use('/student', studentRoute);
 
+//Questionnaires
+const suestionnairesRoute = require('../controller/questionnaire');
+router.use('/questionnaire', suestionnairesRoute);
+
 module.exports = router;

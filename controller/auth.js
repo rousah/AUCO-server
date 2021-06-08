@@ -34,8 +34,8 @@ router.post('/register', async (req, res) => {
     // Check if user is already registred
     const emailExist = await Teacher.findOne({ email: req.body.email });
     if (emailExist) {
-        console.log("This email already exists!")
-        return res.status(400).send("This email already exists!");
+        console.log("This email already exists!");
+        return res.status(409).json({ message: "This email already exists" }).send();
     }
 
     // Hash the password
@@ -54,9 +54,9 @@ router.post('/register', async (req, res) => {
         const savedUser = await user.save();
         console.log("Successfully created teacher");
         // Create and assign a token in cookie
-        const token = jsonwebtoken.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+        const token = jsonwebtoken.sign({ _id: savedUser._id }, process.env.TOKEN_SECRET);
         res.cookie('token', token, { httpOnly: true });
-        res.json({ token, role: 'teacher', userDetails: user });
+        res.json({ token, role: 'teacher', userDetails: savedUser });
         res.status(200).send();
     } catch (err) {
         console.log(err);
@@ -76,7 +76,7 @@ router.post('/login', async (req, res) => {
     // If there's an error it will not log in
     if (error) {
         console.log(error.details[0].message);
-        return res.status(400).send(error.details[0].message);
+        return res.status(400).json(error.details[0]).send();
     }
 
     // Check if the email exists for teachers
@@ -88,7 +88,7 @@ router.post('/login', async (req, res) => {
         });
         if (user.length == 0) {
             console.log("No student or teacher with these credentials");
-            return res.status(400).send("Email, user or password is wrong!");
+            return res.status(400).json({ message: "Email or password is wrong!" }).send();
         }
         console.log("Found student");
         console.log(user)
@@ -99,7 +99,7 @@ router.post('/login', async (req, res) => {
     // Check if password is correct
     const validPass = await checkPassword(user, req.body.password);
     if (!validPass) {
-        return res.status(400).send("Email or password is wrong!");
+        return res.status(400).json({ message: "Email or password is wrong!" }).send();
     }
 
     // Create and assign a token in cookie
@@ -107,7 +107,29 @@ router.post('/login', async (req, res) => {
     res.cookie('token', token, { httpOnly: true });
     res.json({ token, role: user.role, userDetails: user });
     console.log("Successfully logged in");
-    return res.send().status(200);
+    return res.status(200).send();
+
+});
+
+
+// Delete user
+router.delete('/delete/:email', async (req, res) => {
+    console.log("/user/delete");
+
+    // Check if the user exists for teachers
+    let user = await Teacher.findOne({ email: req.params.email });
+
+    // If it doesn't exist
+    if (!user) {
+
+        // TODO: Check also for student if username exists and delete that
+        return res.status(404).json({ message: "No teacher with this email" }).send();
+    }
+
+    // Delete user
+    await Teacher.deleteOne({ "email": req.params.email });
+    console.log("Successfully deleted user");
+    return res.status(200).json({ message: "Successfully deleted user" }).send();
 
 });
 

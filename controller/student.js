@@ -37,8 +37,15 @@ router.get('/class/:id/', async (req, res) => {
     // Getting id info of the class
     classId = req.params.id;
 
+    let students;
     // Getting students
-    const students = await Student.find({ id_class: classId });
+    try {
+        students = await Student.find({ id_class: classId });
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(404).json({ message: "Error: " + err }).send();
+    }
     if (students) {
         console.log("Found students for " + classId);
         return res.status(200).send(students);

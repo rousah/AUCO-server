@@ -3,10 +3,13 @@ const { readXlsx } = require('../middleware/readXlsx');
 const formidable = require('formidable');
 const Class = require('../models/Class');
 const { createStudent } = require('../middleware/createStudent');
+const { deleteStudentsFromClass } = require('../middleware/deleteStudentsFromClass');
 const { createGamificationInfo } = require('../middleware/createGamificationInfo');
+const { reportValidation } = require('../validation');
 var ObjectID = require('mongodb').ObjectID;
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const Questionnaire = require('../models/Questionnaire');
+
 
 // Create class
 router.post('/create', async (req, res) => {
@@ -22,18 +25,35 @@ router.post('/create', async (req, res) => {
             return;
         }
         let students = null;
+
+        // Check if all fields are complete
+        if (fields['userId'] == undefined || fields['withFile'] == undefined || fields['classname'] == undefined || fields['year'] == undefined) {
+            return res.status(400).json({ message: "Form information not complete" }).send();
+        }
+
         // For when we don't have a file
         if (fields['withFile'] == 'false') {
-            students = JSON.parse(fields['students']);
+            if (fields['students'] == undefined) {
+                console.log("No students in form");
+                return res.status(400).json({ message: "Form information not complete, no students" }).send();
+            }
+            else {
+                students = JSON.parse(fields['students']);
+            }
         }
         // For when we do have a file
         else {
-            students = await readXlsx(files['selectedFile']);
+            try {
+                students = await readXlsx(files['selectedFile']);
+            }
+            // For corrupt, missing or broken file
+            catch (err) {
+                console.log("Something is wrong with the file")
+                return res.status(400).json({ message: "Xlxs file not correct" }).send();
+            }
         }
 
-        // Create empty questionnaire schema and model
-        const QuestionnaireSchema = new Schema({}, { strict: false });
-        const Questionnaire = mongoose.model('Questionnaire', QuestionnaireSchema, 'questionnaires');
+        console.log("Successfully read excel file");
 
         // Obtain questionnaires from database
         let questionnaires;
@@ -110,14 +130,20 @@ router.get('/classes/:id', async (req, res) => {
     userId = req.params.id;
 
     // Getting classes
-    const aClass = await Class.find({ id_teacher: userId });
-    if (aClass) {
-        console.log("Found classes for " + userId);
-        return res.status(200).send(aClass);
+    try {
+        const aClass = await Class.find({ id_teacher: userId });
+        if (aClass.length > 0) {
+            console.log("Found classes for " + userId);
+            return res.status(200).send(aClass);
+        }
+        else {
+            console.log("No classes found");
+            return res.status(400).json({ message: "No classes for this userid" }).send();
+        }
     }
-    else {
-        console.log("No classes found");
-        return res.status(400).send("No classes for this userid");
+    catch (err) {
+        console.log(err);
+        return res.status(400).json({ message: err }).send();
     }
 });
 
@@ -127,18 +153,52 @@ router.get('/:id', async (req, res) => {
 
     // Getting id info of the class
     classId = req.params.id;
-    console.log(classId)
 
+    let aClass;
     // Getting class
-    const aClass = await Class.find({ _id: classId });
+    try {
+        aClass = await Class.find({ _id: classId });
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(404).json({ message: "Error: " + err }).send();
+    }
     if (aClass) {
         console.log("Found class for " + classId);
         return res.status(200).send(aClass[0]);
     }
     else {
-        console.log("No classes found");
-        return res.status(400).send("No classes for this classid");
+        console.log("No class found");
+        return res.status(404).json({ message: "No class for this classid" }).send();
     }
+});
+
+// Delete class
+router.delete('/delete/:id', async (req, res) => {
+    console.log("/api/class/delete/:id");
+
+    // Getting id info of the class
+    classId = req.params.id;
+
+    // Delete students
+    try {
+        deleteStudentsFromClass(classId);
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(404).json({ message: err }).send();
+    }
+
+    // Delete class
+    try {
+        await Class.deleteOne({ _id: classId });
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(404).json({ message: err }).send();
+    }
+
+    return res.status(200).json({ message: "Class deleted successfully" }).send();
 });
 
 // Create report
@@ -149,14 +209,48 @@ router.post('/:id/create-report', async (req, res) => {
     classid = req.params.id;
     report = req.body;
 
-    // Add notification to class
+    let validation = reportValidation(report);
+    if (!validation.error) {
+        // Add notification to class
+        Class.findOneAndUpdate({ "_id": ObjectID(classid) }, { $push: { notifications: report } }, { returnNewDocument: true, useFindAndModify: false, new: true, projection: { "notifications": 1 } }, (err, result) => {
+            if (err) {
+                console.error(`Failed to add report: ${err}`);
+                return res.status(400).json({ message: "Error: " + err }).send();
+            }
+            console.log("Successfully created report");
+            return res.status(200).json({ reportId: result.notifications[result.notifications.length - 1]._id }).send();
+        });
+    }
+    else {
+        return res.status(400).json({ message: validation.error.details[0].message }).send();
+    }
+});
+
+// Delete report
+router.delete('/delete-report/:id', async (req, res) => {
+
+    console.log("/api/class/delete-report/:id");
+
+    reportid = req.params.id;
+
+    // Query for student
+    const query = {"notifications._id": reportid};
+
+    // Delete report
     try {
-        savedClass = await Class.updateOne({ "_id": ObjectID(classid) }, { $push: { notifications: report } });
-        console.log("Successfully created report");
-        return res.status(200).send("Successfully created report");
-    } catch (err) {
+        Class.findOneAndUpdate(query, { $pull: { notifications: { '_id': reportid } } }, { useFindAndModify: false, new: true }, (err, result) => {
+            if (err) {
+                console.error(`Failed to delete report: ${err}`);
+                return res.status(400).json({ message: "Error: " + err }).send();
+            }
+            console.log("Successfully deleted report");
+            return res.status(200).json({ message: "Report deleted successfully" }).send();
+            //return res.status(200).json({ reportId: result.notifications[result.notifications.length - 1]._id }).send();
+        });
+    }
+    catch (err) {
         console.log(err);
-        res.status(400).send(err);
+        return res.status(404).json({ message: err }).send();
     }
 });
 
