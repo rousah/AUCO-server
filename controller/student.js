@@ -4,7 +4,7 @@ const StudentSchema = require('../models/StudentSchema');
 const mongoose = require('mongoose');
 const Student = mongoose.model('student', StudentSchema);
 
-// Get student
+// Get student info
 router.get('/:id', async (req, res) => {
     console.log("/api/student");
 
@@ -12,13 +12,14 @@ router.get('/:id', async (req, res) => {
     studentId = req.params.id;
 
     // Query for student
-    const query = {"students._id": studentId};
+    const query = { "students._id": studentId };
 
     // Return only student with this studentid
-    const projection = { _id: 0, "students": {$elemMatch: {"_id": studentId }}};
+    const projection = { _id: 0, "students": { $elemMatch: { "_id": studentId } } };
 
     // Gettings student
     const aStudent = await Class.find(query, projection);
+
     if (aStudent) {
         student = aStudent[0].students[0];
         console.log("Found student for " + studentId);
@@ -27,6 +28,34 @@ router.get('/:id', async (req, res) => {
     else {
         console.log("No student found");
         return res.status(400).send("No student for this studentId");
+    }
+});
+
+// Get student gamification info
+router.get('/gamification/:id', async (req, res) => {
+    console.log("/api/student/gamification/:id");
+
+    // Getting id info of the student
+    studentId = req.params.id;
+    console.log(studentId)
+
+    // Query for student
+    const query = { "students.id_student": studentId };
+
+    // Return only student with this studentid
+    const projection = { _id: 0, "students": { $elemMatch: { "id_student": studentId } } };
+
+    // Gettings student
+    const aStudent = await Class.find(query, projection);
+
+    if (aStudent) {
+        student = aStudent[0].students[0];
+        console.log("Found student gamification for " + studentId);
+        return res.status(200).send(student);
+    }
+    else {
+        console.log("No student gamification found");
+        return res.status(400).send("No student gamification for this studentId");
     }
 });
 
@@ -54,6 +83,29 @@ router.get('/class/:id/', async (req, res) => {
         console.log("No students found");
         return res.status(400).send("No students for this classid");
     }
+});
+
+// Create reponse for student
+router.post('/responses/create/', async (req, res) => {
+    console.log("/api/student/responses/create/");
+
+    console.log(req.body);
+
+    // Query for student
+    const query = { "students.id_student": req.body.id_student };
+
+    const action = { "students.$.responses" : req.body };
+
+    // Updating class with students responses
+    Class.findOneAndUpdate(query, { $push: action }, {useFindAndModify: false, new: true}, (err, result) => {
+        if (err) {
+            console.error(`Failed to add responses: ${err}`);
+            return res.status(400).json({ message: "Error: " + err }).send();
+        }
+        console.log("Successfully created responses");
+        console.log(result);
+        return res.status(200).json({ response: result }).send();
+    });
 });
 
 module.exports = router;

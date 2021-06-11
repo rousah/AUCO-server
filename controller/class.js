@@ -239,8 +239,8 @@ router.delete('/delete-report/:id', async (req, res) => {
 
     reportid = req.params.id;
 
-    // Query for student
-    const query = {"notifications._id": reportid};
+    // Query for notification
+    const query = { "notifications._id": reportid };
 
     // Delete report
     try {
@@ -252,6 +252,37 @@ router.delete('/delete-report/:id', async (req, res) => {
             console.log("Successfully deleted report");
             return res.status(200).json({ message: "Report deleted successfully" }).send();
             //return res.status(200).json({ reportId: result.notifications[result.notifications.length - 1]._id }).send();
+        });
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(404).json({ message: err }).send();
+    }
+});
+
+// Update form settings
+router.put('/update-formsettings/', async (req, res) => {
+
+    console.log("/api/class/update-formsettings");
+
+    let formsettings = req.body;
+
+    console.log(formsettings);
+
+    const query = { "questionnaires._id": ObjectID(formsettings._id) };
+
+    const action = { $set: { "questionnaires.$" : formsettings } };
+
+    // Update questionnaire settings
+    try {
+        Class.findOneAndUpdate(query, action, { returnNewDocument: true, useFindAndModify: false, new: true, projection: { "questionnaires": 1 } }, (err, result) => {
+            if (err) {
+                console.error(`Failed to update settings: ${err}`);
+                return res.status(400).json({ message: "Error: " + err }).send();
+            }
+            console.log("Successfully updated settings");
+            console.log(result);
+            return res.status(200).json({ response: result }).send();
         });
     }
     catch (err) {

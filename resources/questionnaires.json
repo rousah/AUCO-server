@@ -82,7 +82,7 @@
       },
       {
         "question": "Cuando has respondido a las preguntas anteriores, ¿en quién estabas pensando?",
-        "type": "choice",
+        "type": "multiple choice",
         "answers": [
           "En un compañero especialmente",
           "En una compañera especialmente",
@@ -94,7 +94,7 @@
       },
       {
         "question": "Estas situaciones que te han ocurrido en el colegio. ¿con qué frecuencia te han pasado?",
-        "type": "choice",
+        "type": "multiple choice",
         "answers": [
           "Nunca me han pasado esas cosas",
           "Solo me han pasado 1o 2 veces en el curso",
@@ -375,10 +375,10 @@
       },
       {
         "question": "Estas situaciones que te han ocurrido en el colegio. ¿con qué frecuencia te han pasado?",
-        "type": "choice",
+        "type": "multiple choice",
         "answers": [
           "Nunca me han pasado esas cosas",
-          "Solo me han pasado 1o 2 veces en el curso",
+          "Solo me han pasado 1 o 2 veces en el curso",
           "Me han pasado 1 o 2 veces durante varios meses",
           "Me han pasado 1 o 2 veces a la semana durante varios meses",
           "Me han pasado todos o casi todos los días del curso"
