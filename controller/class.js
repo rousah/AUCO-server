@@ -291,5 +291,38 @@ router.put('/update-formsettings/', async (req, res) => {
     }
 });
 
+// Add points to students
+router.put('/student/:id/points', async (req, res) => {
+
+    console.log("/api/class/student/:id/points");
+
+    let studentid = req.params.id;
+
+    let points = req.body.points;
+
+    console.log(points);
+
+    const query = { "students.id_student": ObjectID(studentid) };
+
+    const action = { $inc: { "students.$.score" : points } };
+
+    // Update score of student
+    try {
+        Class.findOneAndUpdate(query, action, { returnNewDocument: true, useFindAndModify: false, new: true, projection: { "students": 1 } }, (err, result) => {
+            if (err) {
+                console.error(`Failed to update score: ${err}`);
+                return res.status(400).json({ message: "Error: " + err }).send();
+            }
+            console.log("Successfully updated score");
+            console.log(result);
+            return res.status(200).json({ response: result }).send();
+        });
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(404).json({ message: err }).send();
+    }
+});
+
 
 module.exports = router;
