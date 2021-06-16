@@ -271,7 +271,7 @@ router.put('/update-formsettings/', async (req, res) => {
 
     const query = { "questionnaires._id": ObjectID(formsettings._id) };
 
-    const action = { $set: { "questionnaires.$" : formsettings } };
+    const action = { $set: { "questionnaires.$": formsettings } };
 
     // Update questionnaire settings
     try {
@@ -297,25 +297,46 @@ router.put('/student/:id/points', async (req, res) => {
     console.log("/api/class/student/:id/points");
 
     let studentid = req.params.id;
-
     let points = req.body.points;
-
     console.log(points);
 
     const query = { "students.id_student": ObjectID(studentid) };
 
-    const action = { $inc: { "students.$.score" : points } };
-
-    // Update score of student
+    // Get old points
     try {
-        Class.findOneAndUpdate(query, action, { returnNewDocument: true, useFindAndModify: false, new: true, projection: { "students": 1 } }, (err, result) => {
+        Class.find(query, { "students.$": 1 }, (err, result) => {
             if (err) {
-                console.error(`Failed to update score: ${err}`);
+                console.error(`Failed to get score: ${err}`);
                 return res.status(400).json({ message: "Error: " + err }).send();
             }
-            console.log("Successfully updated score");
-            console.log(result);
-            return res.status(200).json({ response: result }).send();
+            console.log("Successfully received score");
+            let oldScore = result[0].students[0].score;
+
+            // Calculate new points
+            let newScore = oldScore + points;
+
+            // Calculate new level
+            let levelN = newScore / 100;
+            let level = Math.trunc(levelN);
+            console.log(level);
+
+            // Increment score and update level of student
+            const action = { $inc: { "students.$.score" : points }, $set: {"students.$.level": level} };
+            try {
+                Class.findOneAndUpdate(query, action, { returnNewDocument: true, useFindAndModify: false, new: true, projection: { "students": 1 } }, (err, result) => {
+                    if (err) {
+                        console.error(`Failed to update score: ${err}`);
+                        return res.status(400).json({ message: "Error: " + err }).send();
+                    }
+                    console.log("Successfully updated score");
+                    console.log(result);
+                    return res.status(200).json({ response: result }).send();
+                });
+            }
+            catch (err) {
+                console.log(err);
+                return res.status(404).json({ message: err }).send();
+            }
         });
     }
     catch (err) {
