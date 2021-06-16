@@ -317,7 +317,7 @@ router.put('/student/:id/points', async (req, res) => {
 
             // Calculate new level
             let levelN = newScore / 100;
-            let level = Math.trunc(levelN);
+            let level = Math.trunc(levelN) + 1;
             console.log(level);
 
             // Increment score and update level of student
