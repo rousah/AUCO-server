@@ -106,16 +106,40 @@ router.get('/:id/random/:ids', async (req, res) => {
             }
 
             // Get random index value
-            for (let i = 0; i < 5; i++) {
-                const randomIndex = Math.floor(Math.random() * numbers.length);
+            function getRandomInt(max) {
+                return Math.floor(Math.random() * max);
+            }
 
-                // Get random item
-                const item = numbers[randomIndex];
-                questions[randomIndex].questionNumber = randomIndex;
-                selectedQuestions.push(questions[randomIndex]);
+            if (numbers.length > 5) {
+                for (let i = 0; i < 5; i++) {
+                    // Get random index to use in array
+                    const randomIndex = getRandomInt(numbers.length);
 
-                // Delete chosen number from list of numbers
-                numbers = numbers.filter(number => number != item);
+                    // Get random question number from array of numbers of questions
+                    const random = numbers[randomIndex];
+                    console.log(random);
+
+                    // Set question number to random item
+                    questions[random - 1].questionNumber = random;
+
+                    // Add random item to selected
+                    selectedQuestions.push(questions[random - 1]);
+
+                    // Delete chosen number from list of numbers
+                    numbers = numbers.filter(number => number != random);
+                }
+            }
+            else {
+                console.log(numbers)
+                for (let i = 0; i < numbers.length; i++) {
+                    const index = numbers[i];
+                    console.log(index);
+                    // Set question number to random item
+                    questions[index - 1].questionNumber = index;
+
+                    // Add random item to selected
+                    selectedQuestions.push(questions[index - 1]);
+                }
             }
         }
         // If it doesn't exist
