@@ -90,11 +90,13 @@ router.get('/:id/random/:ids', async (req, res) => {
         let responseStr = JSON.stringify(response);
         response = JSON.parse(responseStr);
 
+        let selectedQuestions = [];
+        const questionLength = questions.length;
+
         // If it exists
         if (response[0] != undefined) {
             // Get 5 random non answered questions
             const answers = response[0];
-            const questionLength = questions.length;
 
             let numbers = [];
             // Get numbers of unanswered questions
@@ -102,32 +104,38 @@ router.get('/:id/random/:ids', async (req, res) => {
                 if (answers[i.toString()] == null) numbers.push(i);
             }
 
-            let selectedQuestions = [];
             // Get random index value
             for (let i = 0; i < 5; i++) {
                 const randomIndex = Math.floor(Math.random() * numbers.length);
 
                 // Get random item
                 const item = numbers[randomIndex];
+                questions[randomIndex].questionNumber = randomIndex;
                 selectedQuestions.push(questions[randomIndex]);
 
                 // Delete chosen number from list of numbers
                 numbers = numbers.filter(number => number != item);
             }
-
-            // Add id's to selected questions
-            thisQuestionnaire.questions = selectedQuestions;
-            thisQuestionnaire.totalQuestions = questionLength;
-            console.log(thisQuestionnaire);
-
-            console.log("Found questionnaire for " + idq);
-            return res.status(200).send(thisQuestionnaire);
         }
+        // If it doesn't exist
         else {
-            // TODO
-            // If it doesn't exist
             // Get 5 random questions
+            // Get random index value
+            for (let i = 0; i < 5; i++) {
+                const randomIndex = Math.floor(Math.random() * questionLength);
+
+                // Get random item
+                selectedQuestions.push(questions[randomIndex]);
+            }
         }
+
+        // Add id's to selected questions
+        thisQuestionnaire.questions = selectedQuestions;
+        thisQuestionnaire.totalQuestions = questionLength;
+        console.log(thisQuestionnaire);
+
+        console.log("Found questionnaire for " + idq);
+        return res.status(200).send(thisQuestionnaire);
     }
     catch (err) {
         console.log(err);
