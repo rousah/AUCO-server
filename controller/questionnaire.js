@@ -4,6 +4,9 @@ const Questionnaire = require('../models/Questionnaire');
 
 fs = require('fs');
 path = require('path');
+const { getQuestionnaire } = require('../middleware/getQuestionnaire');
+const { getGamificationInfoOfStudent } = require('../middleware/getGamificationInfoOfStudent');
+
 
 // Create questionnaire
 router.post('/create', async (req, res) => {
@@ -33,29 +36,102 @@ router.post('/create', async (req, res) => {
     }
 });
 
-// Get questionnaire (not tested)
+// Get questionnaire (not tested), might have some error because changed recently
 router.get('/:id', async (req, res) => {
     console.log("/api/questionnaire/:id");
 
     // Getting id info of the questionnaire
     questionnaireId = req.params.id;
 
-    let thisQuestionnaire;
     // Getting questionnaire
+    let thisQuestionnaire = await getQuestionnaire(questionnaireId);
+    if (!thisQuestionnaire) {
+        console.log("No questionnaire found");
+        return res.status(404).json({ message: "No questionnaire for this questionnaireid" }).send();
+    }
+    console.log("Found questionnaire for " + questionnaireId);
+    return res.status(200).send(thisQuestionnaire);
+});
+
+// Get random questionnaire questions (not tested)
+router.get('/:id/random/:ids', async (req, res) => {
+    console.log("/api/questionnaire/:id/random/:ids");
+
+    // Getting id of student and id of questionnaire
+    const idq = req.params.id;
+    const ids = req.params.ids;
+
+    console.log(idq);
+    console.log(ids);
+
+    // Get all questionnaire questions
+    let thisQuestionnaire = await getQuestionnaire(idq);
+    if (!thisQuestionnaire) {
+        console.log("No questionnaire found");
+        return res.status(404).json({ message: "No questionnaire for this questionnaireid" }).send();
+    }
+
+    // Again, the same JSON 'undefined' error bullshit.......
+    let thisQuestionnaireStr = JSON.stringify(thisQuestionnaire);
+    thisQuestionnaire = JSON.parse(thisQuestionnaireStr);
+
+    const questions = thisQuestionnaire.questions;
+
+    // Getting responses of student
     try {
-        thisQuestionnaire = await Questionnaire.find({ _id: questionnaireId });
+        const student = await getGamificationInfoOfStudent(ids);
+
+        // Checking if response exists
+        console.log(student.responses);
+        let response = student.responses.filter(response => response.id_questionnaire == idq);
+
+
+        // Again, the same JSON 'undefined' error bullshit.......
+        let responseStr = JSON.stringify(response);
+        response = JSON.parse(responseStr);
+
+        // If it exists
+        if (response[0] != undefined) {
+            // Get 5 random non answered questions
+            const answers = response[0];
+            const questionLength = questions.length;
+
+            let numbers = [];
+            // Get numbers of unanswered questions
+            for (let i = 1; i <= questionLength; i++) {
+                if (answers[i.toString()] == null) numbers.push(i);
+            }
+
+            let selectedQuestions = [];
+            // Get random index value
+            for (let i = 0; i < 5; i++) {
+                const randomIndex = Math.floor(Math.random() * numbers.length);
+
+                // Get random item
+                const item = numbers[randomIndex];
+                selectedQuestions.push(questions[randomIndex]);
+
+                // Delete chosen number from list of numbers
+                numbers = numbers.filter(number => number != item);
+            }
+
+            // Add id's to selected questions
+            thisQuestionnaire.questions = selectedQuestions;
+            thisQuestionnaire.totalQuestions = questionLength;
+            console.log(thisQuestionnaire);
+
+            console.log("Found questionnaire for " + idq);
+            return res.status(200).send(thisQuestionnaire);
+        }
+        else {
+            // TODO
+            // If it doesn't exist
+            // Get 5 random questions
+        }
     }
     catch (err) {
         console.log(err);
-        return res.status(404).json({ message: "Error: " + err }).send();
-    }
-    if (thisQuestionnaire.length > 0) {
-        console.log("Found questionnaire for " + questionnaireId);
-        return res.status(200).send(thisQuestionnaire[0]);
-    }
-    else {
-        console.log("No questionnaire found");
-        return res.status(404).json({ message: "No questionnaire for this questionnaireid" }).send();
+        return res.status(400).send("No student gamification for this studentId");
     }
 });
 

@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Class = require('../models/Class');
+const { getGamificationInfoOfStudent } = require('../middleware/getGamificationInfoOfStudent');
 const StudentSchema = require('../models/StudentSchema');
 const mongoose = require('mongoose');
 const Student = mongoose.model('student', StudentSchema);
@@ -39,22 +40,12 @@ router.get('/gamification/:id', async (req, res) => {
     studentId = req.params.id;
     console.log(studentId)
 
-    // Query for student
-    const query = { "students.id_student": studentId };
-
-    // Return only student with this studentid
-    const projection = { _id: 0, "students": { $elemMatch: { "id_student": studentId } } };
-
-    // Gettings student
-    const aStudent = await Class.find(query, projection);
-
-    if (aStudent) {
-        student = aStudent[0].students[0];
-        console.log("Found student gamification for " + studentId);
+    try {
+        const student = await getGamificationInfoOfStudent(studentId);
         return res.status(200).send(student);
     }
-    else {
-        console.log("No student gamification found");
+    catch (err) {
+        console.log(err);
         return res.status(400).send("No student gamification for this studentId");
     }
 });
