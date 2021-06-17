@@ -101,7 +101,8 @@ router.get('/:id/random/:ids', async (req, res) => {
             let numbers = [];
             // Get numbers of unanswered questions
             for (let i = 1; i <= questionLength; i++) {
-                if (answers[i.toString()] == null) numbers.push(i);
+                // INSTEAD OF CHECKING IF NULL, CHECK IF NUMBER EXISTS
+                if (answers[i.toString()] == undefined) numbers.push(i);
             }
 
             // Get random index value
@@ -132,7 +133,6 @@ router.get('/:id/random/:ids', async (req, res) => {
         // Add id's to selected questions
         thisQuestionnaire.questions = selectedQuestions;
         thisQuestionnaire.totalQuestions = questionLength;
-        console.log(thisQuestionnaire);
 
         console.log("Found questionnaire for " + idq);
         return res.status(200).send(thisQuestionnaire);

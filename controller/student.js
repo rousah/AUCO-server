@@ -95,7 +95,8 @@ router.post('/responses/create/', async (req, res) => {
     });
 */
     // Finding if this questionnaire was already answered
-    const responses = await Class.find(query, (err, result) => {
+    const queryS = { "students.responses.id_student": req.body.id_student, "students.responses.id_questionnaire": req.body.id_questionnaire };
+    const responses = await Class.find(queryS, { "students.responses.$": 1 }, (err, result) => {
         if (err) {
             console.error(`Failed to add responses: ${err}`);
             return res.status(400).json({ message: "Error: " + err }).send();
@@ -107,18 +108,35 @@ router.post('/responses/create/', async (req, res) => {
     // If exists, update
     if (responses.length > 0) {
         console.log("exists")
+
+        // Find which is my correct response by filtering for id_questionnaire
+        let myOldResponses = responses[0].students[0].responses.filter(r => r.id_questionnaire == req.body.id_questionnaire)[0];
+
+        myOldResponses = JSON.parse(JSON.stringify(myOldResponses));
+        console.log(myOldResponses);
+
+        // Add new answers to old answers
+        let newAnswers = req.body;
+        delete newAnswers["id_student"];
+        delete newAnswers["id_questionnaire"];
+        const mergedObject = {
+            ...newAnswers,
+            ...myOldResponses
+        };
+
+        // Save new reponse
         const action = {
             $set: {
-                "students.$[s].responses.$[r]": req.body
+                "students.$[s].responses.$[r]": mergedObject
             }
         };
 
         const arrayFilters = [
             {
-                "s.id_student": req.body.id_student
+                "s.id_student": mergedObject.id_student
             },
             {
-                "r.id_questionnaire": req.body.id_questionnaire
+                "r.id_questionnaire": mergedObject.id_questionnaire
             }
         ]
 
