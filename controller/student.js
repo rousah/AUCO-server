@@ -89,23 +89,75 @@ router.get('/class/:id/', async (req, res) => {
 router.post('/responses/create/', async (req, res) => {
     console.log("/api/student/responses/create/");
 
-    console.log(req.body);
+    // Query for questionnaire
+    const query = { "questionnaires.id_questionnaire": req.body.id_questionnaire };
 
-    // Query for student
-    const query = { "students.id_student": req.body.id_student };
-
-    const action = { "students.$.responses" : req.body };
-
-    // Updating class with students responses
-    Class.findOneAndUpdate(query, { $push: action }, {useFindAndModify: false, new: true}, (err, result) => {
+    // DOESNT WORK
+    /*
+    // Increment answered number for this questionnaire
+    await Class.findOneAndUpdate(query, { $inc: { "questionnaires.answered": 1 } }, { useFindAndModify: false, new: true, upsert: true }, (err, result) => {
+        if (err) {
+            console.error(`Failed to increment answered: ${err}`);
+            return res.status(400).json({ message: "Error: " + err }).send();
+        }
+        console.log("Successfully incremented answered");
+    });
+*/
+    // Finding if this questionnaire was already answered
+    const responses = await Class.find(query, (err, result) => {
         if (err) {
             console.error(`Failed to add responses: ${err}`);
             return res.status(400).json({ message: "Error: " + err }).send();
         }
         console.log("Successfully created responses");
-        console.log(result);
-        return res.status(200).json({ response: result }).send();
+        return result;
     });
+
+    // If exists, update
+    if (responses.length > 0) {
+        console.log("exists")
+        const action = {
+            $set: {
+                "students.$[s].responses.$[r]": req.body
+            }
+        };
+
+        const arrayFilters = [
+            {
+                "s.id_student": req.body.id_student
+            },
+            {
+                "r.id_questionnaire": req.body.id_questionnaire
+            }
+        ]
+
+        // Updating class with students responses
+        Class.findOneAndUpdate({}, action, { useFindAndModify: false, new: true, arrayFilters: arrayFilters }, (err, result) => {
+            if (err) {
+                console.error(`Failed to add responses: ${err}`);
+                return res.status(400).json({ message: "Error: " + err }).send();
+            }
+            console.log("Successfully created responses");
+            return res.status(200).json({ response: result }).send();
+        });
+    }
+
+    // If not exists
+    else {
+        console.log("doesnt exists")
+        const query = { "students.id_student": req.body.id_student };
+        const action = { "students.$.responses": req.body };
+
+        // Updating class with students responses
+        Class.findOneAndUpdate(query, { $push: action }, { useFindAndModify: false, new: true }, (err, result) => {
+            if (err) {
+                console.error(`Failed to add responses: ${err}`);
+                return res.status(400).json({ message: "Error: " + err }).send();
+            }
+            console.log("Successfully created responses");
+            return res.status(200).json({ response: result }).send();
+        });
+    }
 });
 
 module.exports = router;

@@ -2,6 +2,7 @@
   {
     "name": "Bullying",
     "partitionable": true,
+    "points": 50,
     "description": "A continuación, verás unas frases que se refieren a comportamientos que algunos chicos y chicas realizan en el colegio. Por favor, contesta con sinceridad y sin ningún miedo si algún compañero/a del colegio o instituto para molestarte de verdad, se ha comportado así contigo el curso anterior.",
     "questions": [
       {
@@ -107,6 +108,7 @@
   },
   {
     "name": "Cyberbullying",
+    "points": 55,
     "partitionable": true,
     "description": "Verás algunas frases sobre algunas conductas que algunos chicos y chicas han podido hacerte durante el último año, para intimidarte o fastidiarte de verdad (no lo han hecho como broma), con el teléfono móvil, en Internet, redes sociales, tablets, WhatsApp...",
     "questions": [
@@ -408,6 +410,7 @@
   },
   {
     "name": "Sexismo",
+    "points": 60,
     "partitionable": true,
     "description": "A continuación se presentan una serie de frases sobre los hombres y las mujeres y sobre su relación mutua en nuestra sociedad contemporánea. Por favor, indica el grado en que estás de acuerdo o en desacuerdo con cada una de las frases usando la escala.",
     "questions": [
