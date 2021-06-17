@@ -89,10 +89,21 @@ router.get('/class/:id/', async (req, res) => {
 router.post('/responses/create/', async (req, res) => {
     console.log("/api/student/responses/create/");
 
-    // Query for student
-    const query = { "students.responses.id_student": req.body.id_student, "students.responses.id_questionnaire": req.body.id_questionnaire };
+    // Query for questionnaire
+    const query = { "questionnaires.id_questionnaire": req.body.id_questionnaire };
 
-    // Updating class with students responses
+    // DOESNT WORK
+    /*
+    // Increment answered number for this questionnaire
+    await Class.findOneAndUpdate(query, { $inc: { "questionnaires.answered": 1 } }, { useFindAndModify: false, new: true, upsert: true }, (err, result) => {
+        if (err) {
+            console.error(`Failed to increment answered: ${err}`);
+            return res.status(400).json({ message: "Error: " + err }).send();
+        }
+        console.log("Successfully incremented answered");
+    });
+*/
+    // Finding if this questionnaire was already answered
     const responses = await Class.find(query, (err, result) => {
         if (err) {
             console.error(`Failed to add responses: ${err}`);
