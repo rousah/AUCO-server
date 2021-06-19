@@ -148,8 +148,11 @@ router.get('/:id/random/:ids', async (req, res) => {
                 for (let i = 0; i < 5; i++) {
                     const randomIndex = Math.floor(Math.random() * questionLength);
 
+                    // Set question number to random item
+                    questions[randomIndex - 1].questionNumber = randomIndex;
+
                     // Get random item
-                    selectedQuestions.push(questions[randomIndex]);
+                    selectedQuestions.push(questions[randomIndex - 1]);
                 }
             }
 
