@@ -78,6 +78,7 @@ router.post('/create', async (req, res) => {
                     active: true,
                     automatic: true,
                     options: "weekly",
+                    answered: 0,
                     name: obj.name
                 }
             );

@@ -22,6 +22,9 @@ const QuestionnaireSettingsSchema = new mongoose.Schema({
     options: {
         type: String,
         required: true
+    },
+    answered: {
+        type: Number
     }
 });
 
