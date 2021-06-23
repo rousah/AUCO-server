@@ -78,6 +78,7 @@ router.post('/create', async (req, res) => {
                     active: true,
                     automatic: true,
                     options: "weekly",
+                    answered: 0,
                     name: obj.name
                 }
             );
@@ -298,7 +299,6 @@ router.put('/student/:id/points', async (req, res) => {
 
     let studentid = req.params.id;
     let points = req.body.points;
-    console.log(points);
 
     const query = { "students.id_student": ObjectID(studentid) };
 
@@ -318,7 +318,6 @@ router.put('/student/:id/points', async (req, res) => {
             // Calculate new level
             let levelN = newScore / 100;
             let level = Math.trunc(levelN) + 1;
-            console.log(level);
 
             // Increment score and update level of student
             const action = { $inc: { "students.$.score" : points }, $set: {"students.$.level": level} };
@@ -329,7 +328,6 @@ router.put('/student/:id/points', async (req, res) => {
                         return res.status(400).json({ message: "Error: " + err }).send();
                     }
                     console.log("Successfully updated score");
-                    console.log(result);
                     return res.status(200).json({ response: result }).send();
                 });
             }
