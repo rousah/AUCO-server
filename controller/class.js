@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { readXlsx } = require('../middleware/readXlsx');
+const { createXlsxWithStudents } = require('../middleware/createExcel');
 const formidable = require('formidable');
 const Class = require('../models/Class');
 const { createStudent } = require('../middleware/createStudent');
@@ -114,17 +115,20 @@ router.post('/create', async (req, res) => {
             gamification[i] = createGamificationInfo(students[i]._id);
         }
 
+        // Create file with names, surnames, usernames and passwords
+        createXlsxWithStudents(students);
+
         // Add gamificationinfo of all students to class in database
         try {
             savedClass = await Class.updateOne({ "_id": ObjectID(classId) }, { $set: { students: gamification } });
             console.log("Successfully saved gamification info");
         } catch (err) {
-            console.log(err);
+            console.error(err);
             res.status(400).send(err);
         }
 
         console.log("Successfully created class and students!");
-        res.status(200).send({ newClass: classId });
+        res.status(200).sendFile(path.join(__dirname, '../resources', 'Students.xlsx'));
     });
 });
 
@@ -320,7 +324,7 @@ router.put('/student/:id/points', async (req, res) => {
             let level = Math.trunc(levelN) + 1;
 
             // Increment score and update level of student
-            const action = { $inc: { "students.$.score" : points }, $set: {"students.$.level": level} };
+            const action = { $inc: { "students.$.score": points }, $set: { "students.$.level": level } };
             try {
                 Class.findOneAndUpdate(query, action, { returnNewDocument: true, useFindAndModify: false, new: true, projection: { "students": 1 } }, (err, result) => {
                     if (err) {

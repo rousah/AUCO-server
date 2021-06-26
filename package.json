@@ -23,6 +23,7 @@
     "config": "^3.3.6",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "excel4node": "^1.7.2",
     "express": "^4.17.1",
     "formidable": "^1.2.2",
     "generate-password": "^1.6.0",
