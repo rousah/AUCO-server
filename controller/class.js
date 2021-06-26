@@ -167,7 +167,7 @@ router.get('/:id', async (req, res) => {
     }
     catch (err) {
         console.log(err);
-        return res.status(404).json({ message: "Error: " + err }).send();
+        return res.status(400).json({ message: "Error: " + err }).send();
     }
     if (aClass.length > 0) {
         console.log("Found class for " + classId);
@@ -193,7 +193,7 @@ router.delete('/delete/:id', async (req, res) => {
     }
     catch (err) {
         console.log(err);
-        return res.status(404).json({ message: err }).send();
+        return res.status(400).json({ message: err }).send();
     }
 
     // Delete class
@@ -202,7 +202,7 @@ router.delete('/delete/:id', async (req, res) => {
     }
     catch (err) {
         console.log(err);
-        return res.status(404).json({ message: err }).send();
+        return res.status(400).json({ message: err }).send();
     }
 
     return res.status(200).json({ message: "Class deleted successfully" }).send();
