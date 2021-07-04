@@ -1,0 +1,95 @@
+[
+  {
+    "name": "Sociograma",
+    "partitionable": false,
+    "points": 5,
+    "description": "Las  siguientes  preguntas  ayudarán  a  tu  profesor/a  a  entender  mejor  como veis  el  ambiente  que  os  rodea  en  el  colegio.  Estas  preguntas  se  refieren  a CÓMO VES A TUS COMPAÑEROS/AS Y A TI MISMO/A EN CLASE. Responde   a   cada   pregunta   escribiendo,   COMO   MÁXIMO,   TRES NOMBRES   DE COMPAÑEROS/ASde   tu   clase   POR   ORDEN   DE PREFERENCIA, que mejor se ajusten a la pregunta.Al poner tu respuesta escribe por favor NOMBRE y APELLIDO de tu compañero/a, con el símbolo @.",
+    "questions": [
+      {
+        "question": "¿Con  quién  te  gustaría trabajar en  clase  para hacer trabajos en grupo?",
+        "type": "blank list",
+        "answers": [3]
+      },
+      {
+        "question": "¿Con  quién NO te  gustaría trabajar en  clase  para hacer trabajos en grupo?",
+        "type": "blank list",
+        "answers": [3]
+      },
+      {
+        "question": "¿Con quién te gustaría te gustaría pasar tu tiempo durante el recreo?",
+        "type": "blank list",
+        "answers": [3]
+      },
+      {
+        "question": "¿Con quién NO te gustaría te gustaría pasar tu tiempo durante el recreo?",
+        "type": "blank list",
+        "answers": [3]
+      },
+      {
+        "question": "¿Con  quién  te  gustaría  pasar  tu  tiempo  libre, fuera del colegio (ir al cine, invitarle a tu cumpleaños, ir a los bolos, etc.)?",
+        "type": "blank list",
+        "answers": [3]
+      },
+      {
+        "question": "¿Con  quién NO te  gustaría  pasar  tu  tiempo  libre, fuera del colegio (ir al cine, invitarle a tu cumpleaños, ir a los bolos, etc.)?",
+        "type": "blank list",
+        "answers": [3]
+      },
+      {
+        "question": "Si para realizar un juego o formar equiposen clase de Educación Física, el grupo se subdividiese en dos, ¿Con quién te gustaría ir en el grupo?",
+        "type": "blank list",
+        "answers": [3]
+      },
+      {
+        "question": "Si para realizar un juego o formar equiposen clase de Educación Física, el grupo se subdividiese en dos, ¿Con quién NO te gustaría ir en el grupo?",
+        "type": "blank list",
+        "answers": [3]
+      },
+      {
+        "question": "Si se organiza una salida en autobús, ¿quién te gustaría quese sentara a tu lado?",
+        "type": "blank list",
+        "answers": [3]
+      },
+      {
+        "question": "Si se organiza una salida en autobús, ¿quién NO te gustaría quese sentara a tu lado?",
+        "type": "blank list",
+        "answers": [3]
+      },
+      {
+        "question": "Si en clase de Educación Física tuvierais que formar parejas para realizar una  actividad,  ¿quién  te  gustaría  que  fuese  tu  pareja?",
+        "type": "blank list",
+        "answers": [3]
+      },
+      {
+        "question": "Si en clase de Educación Física tuvierais que formar parejas para realizar una  actividad,  ¿quién NO te  gustaría  que  fuese  tu  pareja?",
+        "type": "blank list",
+        "answers": [3]
+      },
+      {
+        "question": "¿Quién te gustaría que formara parte de tu equipo para realizar en Educación Física una  actividad  de cooperación (por ejemplo una coreografía de acrosport)?",
+        "type": "blank list",
+        "answers": [3]
+      },
+      {
+        "question": "¿Quién NO te gustaría que formara parte de tu equipo para realizar en Educación Física una  actividad  de cooperación (por ejemplo una coreografía de acrosport)?",
+        "type": "blank list",
+        "answers": [3]
+      },
+      {
+        "question": "Si el profesor de Educación Física os dejara tiempo libre al final de la clase para  realizar  la  actividad  que  más  os  guste,  ¿quién  te  gustaría  que estuviera contigo?",
+        "type": "blank list",
+        "answers": [3]
+      },
+      {
+        "question": "Si el profesor de Educación Física os dejara tiempo libre al final de la clase para  realizar  la  actividad  que  más  os  guste,  ¿quién NO te  gustaría  que estuviera contigo?",
+        "type": "blank list",
+        "answers": [3]
+      },
+      {
+        "question": "¿A quiénes consideras tus mejores amigos dentro de tu clase?",
+        "type": "blank list",
+        "answers": [3]
+      }
+    ]
+  }
+]
