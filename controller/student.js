@@ -3,6 +3,7 @@ const Class = require('../models/Class');
 const { getGamificationInfoOfStudent } = require('../middleware/getGamificationInfoOfStudent');
 const { incrementAnswers } = require('../middleware/incrementAnswers');
 const { getQuestionnaire } = require('../middleware/getQuestionnaire');
+const { getStudents } = require('../middleware/getStudents');
 const StudentSchema = require('../models/StudentSchema');
 const mongoose = require('mongoose');
 const Student = mongoose.model('student', StudentSchema);
@@ -61,13 +62,7 @@ router.get('/class/:id/', async (req, res) => {
 
     let students;
     // Getting students
-    try {
-        students = await Student.find({ id_class: classId });
-    }
-    catch (err) {
-        console.log(err);
-        return res.status(404).json({ message: "Error: " + err }).send();
-    }
+    students = await getStudents(classId);
     if (students) {
         console.log("Found students for " + classId);
         return res.status(200).send(students);
@@ -107,7 +102,6 @@ router.post('/responses/create/', async (req, res) => {
             let newAnswers = req.body;
 
             delete newAnswers["id_student"];
-            delete newAnswers["id_questionnaire"];
             delete newAnswers["id_questionnaire"];
             const mergedObject = {
                 ...newAnswers,
