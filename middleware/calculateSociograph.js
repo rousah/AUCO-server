@@ -1,6 +1,6 @@
 
 const calculateSociograph = (students, studentNames) => {
-    console.log("Attempting to calculate sociograph from student responses");
+    console.log("Attempting to calculate sociogram from student responses");
 
     let nodes = [];
     let links = [];
