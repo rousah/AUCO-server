@@ -5,6 +5,7 @@ const Questionnaire = require('../models/Questionnaire');
 fs = require('fs');
 path = require('path');
 const { getQuestionnaire } = require('../middleware/getQuestionnaire');
+const { getQuestionnaires } = require('../middleware/getQuestionnaires');
 const { getGamificationInfoOfStudent } = require('../middleware/getGamificationInfoOfStudent');
 
 
@@ -185,6 +186,56 @@ router.get('/:id/random/:ids', async (req, res) => {
         console.log("Found questionnaire for " + idq);
         return res.status(200).send(thisQuestionnaire);
     }
+});
+
+
+// Get one random questionnaire question (not tested)
+router.get('/get/random-question', async (req, res) => {
+    console.log("/api/questionnaire/get/random-question");
+
+    // Get all questionnaire questions
+    let questionnaires = await getQuestionnaires();
+    if (!questionnaires) {
+        console.log("No questionnaire found");
+        return res.status(404).json({ message: "No questionnaires" }).send();
+    }
+
+    // Again, the same JSON 'undefined' error bullshit.......
+    let questionnairestring = JSON.stringify(questionnaires);
+    questionnaires = JSON.parse(questionnairestring);
+
+    questionnaires.forEach((questionnaire, index) => {
+
+        // Get rid of non partitionable questionnaires
+        if (!questionnaire.partitionable) {
+            delete questionnaires[index]
+        }
+
+        // Get random index value
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+        }
+
+        let randomQuestionnaire = questionnaires[getRandomInt(questionnaires.length - 1)];
+
+        console.log(randomQuestionnaire);
+
+        // Assign questionnaire length
+        // Again, the same JSON 'undefined' error bullshit.......
+        randomQuestionnaire = JSON.parse(JSON.stringify(randomQuestionnaire));
+        const questionLength = randomQuestionnaire.questions.length;
+        randomQuestionnaire.totalQuestions = questionLength;
+
+        // Get and assign random question from randomly selected questionnaire
+        const randomQuestion = randomQuestionnaire.questions[getRandomInt(questionLength)];
+        console.log(randomQuestion);
+
+        randomQuestionnaire.questions = [randomQuestion]
+
+        console.log("Found random question of random questionnaire");
+        return res.status(200).send(randomQuestionnaire);
+
+    });
 });
 
 module.exports = router;
