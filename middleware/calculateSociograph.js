@@ -10,7 +10,7 @@ const calculateSociograph = (students, studentNames) => {
             "id": studentNames[index].name + " " + studentNames[index].surname,
             "radius": 8,
             "depth": 1,
-            "color": "rgb(97, 205, 187)"
+            "color": "rgb(253, 191, 77)"
         })
         // Find responses of sociograph questionnaire
         element.responses.forEach(response => {
