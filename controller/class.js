@@ -1,11 +1,13 @@
 const router = require('express').Router();
 const { readXlsx } = require('../middleware/readXlsx');
 const { createXlsxWithStudents } = require('../middleware/createExcel');
+const { calculateSociograph } = require('../middleware/calculateSociograph');
 const formidable = require('formidable');
 const Class = require('../models/Class');
 const { createStudent } = require('../middleware/createStudent');
 const { deleteStudentsFromClass } = require('../middleware/deleteStudentsFromClass');
 const { createGamificationInfo } = require('../middleware/createGamificationInfo');
+const { getStudents } = require('../middleware/getStudents');
 const { reportValidation } = require('../validation');
 var ObjectID = require('mongodb').ObjectID;
 const Questionnaire = require('../models/Questionnaire');
@@ -175,8 +177,25 @@ router.get('/:id', async (req, res) => {
     }
     if (aClass.length > 0) {
         console.log("Found class for " + classId);
-        console.log(aClass)
-        return res.status(200).send(aClass[0]);
+
+        // Get student names of class
+        let students = await getStudents(classId);
+        // Getting students
+        if (students) {
+            console.log("Found students for " + classId);
+
+            // Calculate sociograph
+            let sociographNodes = calculateSociograph(aClass[0].students, students);
+
+            const body = {
+                relationships: sociographNodes, myClass: aClass[0]
+            }
+            return res.status(200).send(body);
+        }
+        else {
+            console.log("No students found");
+            return res.status(400).send("No students for this classid");
+        }
     }
     else {
         console.log("No class found");
