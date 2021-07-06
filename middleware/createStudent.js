@@ -57,7 +57,7 @@ const createStudent = async (student, classId) => {
         savedStudent = await newStudent.save();
     } catch (err) {
         console.log(err);
-        res.status(400).send(err);
+        throw (err);
     }
 
     return savedStudent;

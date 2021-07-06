@@ -111,10 +111,15 @@ router.post('/create', async (req, res) => {
         // Create student user for every student with class id
         let gamification = [];
         for (let i = 0; i < students.length; i++) {
-            students[i] = await createStudent(students[i], classId);
+            // Check if student info is complete
+            if (students[i].name != "" && students[i].surname != "") {
 
-            // Create gamificationinfo for all students
-            gamification[i] = createGamificationInfo(students[i]._id);
+                // Create student
+                students[i] = await createStudent(students[i], classId);
+
+                // Create gamificationinfo for all students
+                gamification[i] = createGamificationInfo(students[i]._id);
+            }
         }
 
         // Create file with names, surnames, usernames and passwords
