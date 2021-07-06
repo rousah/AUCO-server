@@ -47,6 +47,7 @@ router.post('/create', async (req, res) => {
         else {
             try {
                 students = await readXlsx(files['selectedFile']);
+                console.log("Successfully read excel file");
             }
             // For corrupt, missing or broken file
             catch (err) {
@@ -54,8 +55,6 @@ router.post('/create', async (req, res) => {
                 return res.status(400).json({ message: "Xlxs file not correct" }).send();
             }
         }
-
-        console.log("Successfully read excel file");
 
         // Obtain questionnaires from database
         let questionnaires;
