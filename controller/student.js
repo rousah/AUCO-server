@@ -14,24 +14,23 @@ router.get('/:id', async (req, res) => {
 
     // Getting id info of the student
     studentId = req.params.id;
+    console.log(studentId)
 
     // Query for student
-    const query = { "students._id": studentId };
-
-    // Return only student with this studentid
-    const projection = { _id: 0, "students": { $elemMatch: { "_id": studentId } } };
+    const query = { "_id": studentId };
 
     // Gettings student
-    const aStudent = await Class.find(query, projection);
+    const aStudent = await Student.find(query);
+    console.log(aStudent)
 
-    if (aStudent) {
-        student = aStudent[0].students[0];
+    if (aStudent.length > 0) {
+        student = aStudent[0];
         console.log("Found student for " + studentId);
         return res.status(200).send(student);
     }
     else {
         console.log("No student found");
-        return res.status(400).send("No student for this studentId");
+        return res.status(400).send({ message: "No student for this studentId" });
     }
 });
 
@@ -41,7 +40,6 @@ router.get('/gamification/:id', async (req, res) => {
 
     // Getting id info of the student
     studentId = req.params.id;
-    console.log(studentId)
 
     try {
         const student = await getGamificationInfoOfStudent(studentId);
