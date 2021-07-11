@@ -134,7 +134,7 @@ router.post('/create', async (req, res) => {
         }
 
         console.log("Successfully created class and students!");
-        res.status(200).sendFile(path.join(__dirname, '../resources', 'Students.xlsx'));
+        res.status(200).send({newClass: classId}).sendFile(path.join(__dirname, '../resources', 'Students.xlsx'));
     });
 });
 
@@ -243,10 +243,24 @@ router.post('/:id/create-report', async (req, res) => {
     classid = req.params.id;
     report = req.body;
 
+    try {
+        ObjectID(report.student_id)
+    }
+    catch (e) {
+        return res.status(400).json({ message: "Error student_id: " + e }).send();
+    }
+
     let validation = reportValidation(report);
+    let id;
+    try {
+        id = ObjectID(classid);
+    }
+    catch (e) {
+        return res.status(400).json({ message: "Error class id: " + e }).send();
+    }
     if (!validation.error) {
         // Add notification to class
-        Class.findOneAndUpdate({ "_id": ObjectID(classid) }, { $push: { notifications: report } }, { returnNewDocument: true, useFindAndModify: false, new: true, projection: { "notifications": 1 } }, (err, result) => {
+        Class.findOneAndUpdate({ "_id": id }, { $push: { notifications: report } }, { returnNewDocument: true, useFindAndModify: false, new: true, projection: { "notifications": 1 } }, (err, result) => {
             if (err) {
                 console.error(`Failed to add report: ${err}`);
                 return res.status(400).json({ message: "Error: " + err }).send();
