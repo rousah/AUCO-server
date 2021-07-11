@@ -29,7 +29,6 @@ router.post('/create', async (req, res) => {
                 return res.status(400).json({ message: err }).send();
             }
         });
-
         return res.status(200).send({ message: "Questionnaires created successfully" });
     }
     catch (err) {
@@ -172,7 +171,6 @@ router.get('/:id/random/:ids', async (req, res) => {
 
     // If not partitionable
     else {
-
         // Add question number to questions
         for (let i = 0; i < questions.length; i++) {
 
@@ -187,6 +185,23 @@ router.get('/:id/random/:ids', async (req, res) => {
         return res.status(200).send(thisQuestionnaire);
     }
 });
+
+// Delete questionnaire by id, not tested
+router.delete('/delete/:id', async (req, res) => {
+    console.log("/api/questionnaire/delete/:id")
+    let qId = req.params.id;
+
+    // Delete questionnaire
+    try {
+        await Questionnaire.deleteOne({ _id: qId });
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(400).json({ message: err }).send();
+    }
+
+    return res.status(200).json({ message: "Questionnaire deleted successfully" }).send();
+})
 
 
 // Get one random questionnaire question (not tested)
@@ -237,5 +252,6 @@ router.get('/get/random-question', async (req, res) => {
 
     });
 });
+
 
 module.exports = router;

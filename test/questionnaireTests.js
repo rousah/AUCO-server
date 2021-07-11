@@ -18,13 +18,13 @@ const address = "http://localhost:" + port + '/questionnaire';
 // --------------------------------------------------------
 // main ()
 // --------------------------------------------------------
-/*
+
 describe("Test 1: Questionnaires", function () {
 
 	// ....................................................
 	// Create questionnaires
 	// ....................................................
-	it("test POST /create", function (done) {
+/*	it("test POST /create", function (done) {
 		request.post( // petition: POST
 			{
 				url: address + "/create",
@@ -45,5 +45,5 @@ describe("Test 1: Questionnaires", function () {
 				done()
 			}
 		) // post
-	}) // it 
-}) // describe*/
+	}) // it  */
+}) // describe
