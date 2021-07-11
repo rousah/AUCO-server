@@ -226,8 +226,8 @@ describe("Test 1: Authentication", function () {
 			{
 				url: address + "/login",
 				body: {
-					'email': 'Ineffable-stefano-66', // required, string. Will have to change if I delete class
-					'password': 'AD8CZ7Np' // required, min 1
+					'email': 'imaginative-ben-58', // required, string. Will have to change if I delete class
+					'password': 'ujVU2JZd' // required, min 1
 				},
 				json: true
 			},
