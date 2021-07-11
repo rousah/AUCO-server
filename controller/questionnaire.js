@@ -15,7 +15,7 @@ router.post('/create', async (req, res) => {
     console.log("/api/questionnaire/create");
 
     try {
-        const raw = fs.readFileSync('./resources/questionnaires.json');
+        const raw = fs.readFileSync('./resources/PADquestionnaire.json');
         const questionnaires = JSON.parse(raw);
         console.log(questionnaires);
 
@@ -29,7 +29,7 @@ router.post('/create', async (req, res) => {
                 return res.status(400).json({ message: err }).send();
             }
         });
-        return res.status(200).send({ message: "Questionnaires created successfully" });
+        return res.status(200).json({ message: "Questionnaires created successfully" });
     }
     catch (err) {
         return res.status(400).json({ message: err }).send();

@@ -71,7 +71,7 @@ describe("Test 4: Students", function () {
                     "Response code isn't 200: " + response.statusCode);
                 assert.equal(student.id_student, studentid, "Id isn't correct: " + student.id_student);
 
-                console.log(" ----- response for GET /student/:id ---- ")
+                console.log(" ----- response for GET /student/gamification/:id ---- ")
                 console.log(" Student id of gamification: " + student.id_student);
                 console.log(" ------------------------------------------- ")
 

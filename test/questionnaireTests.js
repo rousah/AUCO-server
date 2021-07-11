@@ -19,12 +19,12 @@ const address = "http://localhost:" + port + '/questionnaire';
 // main ()
 // --------------------------------------------------------
 
-describe("Test 1: Questionnaires", function () {
+describe("Test 3: Questionnaires", function () {
 
 	// ....................................................
 	// Create questionnaires
 	// ....................................................
-/*	it("test POST /create", function (done) {
+	it("test POST /create", function (done) {
 		request.post( // petition: POST
 			{
 				url: address + "/create",
@@ -36,7 +36,7 @@ describe("Test 1: Questionnaires", function () {
 					"Response code isn't 200: " + response.statusCode);
 
 				console.log(" ----- response for POST /questionnaire/create ---- ")
-				console.log(" Response: " + body.message);
+				console.log(" Response: " + JSON.parse(body).message);
 				console.log(" -------------------------------------------------- ")
 
 				//
@@ -45,5 +45,5 @@ describe("Test 1: Questionnaires", function () {
 				done()
 			}
 		) // post
-	}) // it  */
+	}) // it
 }) // describe
