@@ -144,15 +144,17 @@ router.get('/:id/random/:ids', async (req, res) => {
             // If it doesn't exist
             else {
                 // Get 5 random questions
-                // Get random index value
                 for (let i = 0; i < 5; i++) {
+                    // Get random index value
                     const randomIndex = Math.floor(Math.random() * questionLength);
 
+                    console.log(randomIndex)
+
                     // Set question number to random item
-                    questions[randomIndex - 1].questionNumber = randomIndex;
+                    questions[randomIndex].questionNumber = randomIndex;
 
                     // Get random item
-                    selectedQuestions.push(questions[randomIndex - 1]);
+                    selectedQuestions.push(questions[randomIndex]);
                 }
             }
 
