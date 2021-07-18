@@ -134,7 +134,7 @@ router.post('/create', async (req, res) => {
         }
 
         console.log("Successfully created class and students!");
-        res.status(200).send({newClass: classId}).sendFile(path.join(__dirname, '../resources', 'Students.xlsx'));
+        res.status(200).sendFile(path.join(__dirname, '../resources', 'Students.xlsx'));
     });
 });
 
