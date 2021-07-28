@@ -1,0 +1,22 @@
+[
+  {
+    "name": "PAD emociones",
+    "partitionable": true,
+    "points": 5,
+    "description": "Indica cómo te sientes hoy:",
+    "questions": [
+      {
+        "question": "Nivel de placer, gusto, felicidad:",
+        "answers": ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+      },
+      {
+        "question": "Nivel de excitación, nerviosismo, ansiedad:",
+        "answers": ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+      },
+      {
+        "question": "Nivel de dominación, sentimiento de autoridad, poder:",
+        "answers": ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+      }
+    ]
+  }
+]
